@@ -21,6 +21,12 @@ class Truck(BaseModel):
     yom = models.DateField(null=True, blank=True)
     carry_weight = models.DecimalField(max_digits=9, decimal_places=2, null=True, blank=True)
 
+    def is_available(self):
+        for shipment in self.shipments.all():
+            if shipment.status == "READY" or shipment.status == "ON WAY":
+                return False
+        return True
+
     def __str__(self):
         return f"{self.manufacturer} {self.model}"
 
@@ -52,6 +58,7 @@ class Client(BaseModel):
 
 class Parcel(BaseModel):
     class Status(models.TextChoices):
+        READY = "READY", "Ready"
         DELAYED = "DELAYED", "Delayed"
         ONWAY = "ON WAY", "On way"
         ARRIVED = "ARRIVED", "Arrived"
@@ -60,7 +67,7 @@ class Parcel(BaseModel):
     parcel_number = models.CharField(max_length=250, null=True, blank=True)
     weight = models.DecimalField(max_digits=9, decimal_places=2)
     item = models.CharField(max_length=250, null=True, blank=True)
-    status = models.CharField(max_length=255, choices=Status.choices, default=Status.ONWAY)
+    status = models.CharField(max_length=255, choices=Status.choices, default=Status.READY)
     destination = models.ForeignKey(Location, on_delete=models.CASCADE, null=True, blank=True)
     recipient_contact = models.CharField(max_length=250, null=True, blank=True)
 
@@ -76,15 +83,16 @@ class Parcel(BaseModel):
 
 class Shipment(BaseModel):
     class Status(models.TextChoices):
+        READY = "READY", "Ready"
         DELAYED = "DELAYED", "Delayed"
         ONWAY = "ON WAY", "On way"
         ARRIVED = "ARRIVED", "Arrived"
         
-    truck = models.ForeignKey(Truck, on_delete=models.CASCADE)
+    truck = models.ForeignKey(Truck, on_delete=models.CASCADE, related_name='shipments')
     driver = models.ForeignKey(Driver, on_delete=models.CASCADE)
     parcels = models.ManyToManyField(Parcel, blank=True)
     shipment_number = models.CharField(max_length=250, null=True, blank=True)
-    status = models.CharField(max_length=255, choices=Status.choices, default=Status.ONWAY)
+    status = models.CharField(max_length=255, choices=Status.choices, default=Status.READY)
     route_from = models.ForeignKey(Location, on_delete=models.CASCADE, null=True, blank=True)
     route_to = models.ForeignKey(Location, on_delete=models.CASCADE, related_name="destination", null=True, blank=True)
     departure_date = models.DateTimeField(null=True, blank=True)

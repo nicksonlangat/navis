@@ -2,7 +2,8 @@ from django.urls import path
 
 from .views import (
     ClientApi, TruckApi, DriverApi,
-    ShipmentApi, ParcelApi, LocationApi
+    ShipmentApi, ParcelApi, LocationApi,
+    AnalyticsApi
     )
 
 urlpatterns = [
@@ -28,4 +29,7 @@ urlpatterns = [
 
     # location endpoints
     path("locations", LocationApi.as_view(), name="locations"),
+
+    # analytics endpoints
+    path("analytics", AnalyticsApi.as_view(), name="analytics"),
 ]

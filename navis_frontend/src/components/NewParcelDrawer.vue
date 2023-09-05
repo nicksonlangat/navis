@@ -56,8 +56,9 @@
                                 <div class="flex flex-col gap-1">
                                     <label for="status">Status</label>
                                     <select v-model="parcel.status" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-500 font-base" placeholder="Brown">
-                                        <option value="DELAYED">Delayed</option>
+                                        <option value="READY">Ready</option>
                                         <option value="ON WAY">On way</option>
+                                        <option value="DELAYED">Delayed</option>
                                         <option value="ARRIVED">Arrived</option>
                                     </select>
                                 </div>
@@ -104,7 +105,7 @@ export default {
                 weight: "",
                 destination: "",
                 recipient_contact: "",
-                status: "ON WAY"
+                status: "READY"
             }
         }
     },
@@ -132,7 +133,7 @@ export default {
             this.parcel.weight = "",
             this.parcel.destination = "",
             this.parcel.recipient_contact = "",
-            this.parcel.status = "ON WAY"
+            this.parcel.status = "READY"
         },
         submitNewParcel() {
             this.createParcel({

@@ -56,8 +56,9 @@
                                 <div class="flex flex-col gap-1">
                                     <label for="status">Status</label>
                                     <select v-model="shipment.status" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-500 font-base" placeholder="Brown">
-                                        <option value="DELAYED">Delayed</option>
+                                        <option value="READY">Ready</option>
                                         <option value="ON WAY">On way</option>
+                                        <option value="DELAYED">Delayed</option>
                                         <option value="ARRIVED">Arrived</option>
                                     </select>
                                 </div>
@@ -107,7 +108,7 @@ export default {
                 destination: "",
                 departure_date: "",
                 arrival_date: "",
-                status: "",
+                status: "READY",
                 route_from: "",
                 route_to: "",
                 parcels: []
@@ -137,12 +138,24 @@ export default {
             getAllDrivers: 'getAllDrivers',
             getAllLocations: 'getAllLocations',
         }),
+        resetForm() {
+            this.shipment.truck = ""
+            this.shipment.driver = ""
+            this.shipment.destination = ""
+            this.shipment.departure_date = ""
+            this.shipment.arrival_date = ""
+            this.shipment.status = "READY"
+            this.shipment.route_from = ""
+            this.shipment.route_to = ""
+            this.shipment.parcels = []
+        },
         submitNewShipment() {
             this.createShipment({
                 payload: this.shipment,
                 cb: (() => {
                     this.closeModal()
                     this.emitter.emit("reloadShipments", "add")
+                    this.resetForm()
                 })
             })
         },

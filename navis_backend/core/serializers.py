@@ -53,7 +53,7 @@ class TruckSerializer(serializers.ModelSerializer):
         class Meta:
             model = Truck
             fields = [
-                "id", "manufacturer", "model", 
+                "id", "manufacturer", "model", "is_available",
                 "chasis_number", "created_at", "carry_weight",
                 "registration_number", "engine_size", 
                 "engine_power", "yom", "updated_at"

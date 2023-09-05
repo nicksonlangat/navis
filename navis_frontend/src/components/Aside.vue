@@ -69,7 +69,6 @@
             Clients</li>
     </ul>
     <div class="pl-5 font-base w-full mt-20">
-
         <NewShipmentDrawer />
     </div>
     <hr class="mt-8">

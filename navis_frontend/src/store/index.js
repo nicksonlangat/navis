@@ -8,7 +8,7 @@ export default createStore({
     trucks: [],
     drivers: [],
     shipments: [],
-    locations: [],
+    locations: []
   },
   getters: {
     getStoredClients: (state) => {
@@ -48,9 +48,22 @@ export default createStore({
   },
     SET_LOCATIONS(state, locations) {
       state.locations = locations
-  },
+  }
   },
   actions: {
+    async getAllAnalytics({ commit, state }, { setResult=true, cb }) {
+        return await Api()
+            .get('/analytics')
+            .then((response) => {
+                if (cb) {
+                    cb(response.data.data)
+                }
+                return response.data.data
+            })
+            .catch((error) => {
+                return Promise.reject(error)
+            })
+    },
     async createClient({ commit }, { payload, cb }) {
       return await Api()
           .post('clients', payload)

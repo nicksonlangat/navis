@@ -5,6 +5,8 @@ from rest_framework.generics import (
     RetrieveUpdateAPIView, 
     RetrieveDestroyAPIView
 )
+from rest_framework.views import APIView
+from django.db.models import Q
 
 from common.pagination import (
     LimitOffsetPagination,
@@ -285,3 +287,26 @@ class LocationApi(ListAPIView):
             request=request,
             view=self,
         )
+
+
+class AnalyticsApi(APIView):
+
+    def get(self, request):
+        new_parcels = Parcel.objects.filter(status="READY").count()
+        recent_parcels = Parcel.objects.filter(status="READY")
+        on_way_parcels = Parcel.objects.filter(status="ON WAY").count()
+        delivered_parcels = Parcel.objects.filter(status="ARRIVED").count()
+        active_shipments = Shipment.objects.filter(Q(status="READY") | Q(status="ON WAY"))
+        available_trucks = truck_list()
+        clients = client_list()
+        return Response({
+            "data": {
+                "new_parcels": new_parcels,
+                "clients": ClientSerializer(clients, many=True).data,
+                "on_way_parcels": on_way_parcels,
+                "delivered_parcels": delivered_parcels,
+                "active_shipments": ShipmentSerializer(active_shipments, many=True).data,
+                "available_trucks": TruckSerializer(available_trucks, many=True).data,
+                "recent_parcels": ParcelSerializer(recent_parcels, many=True).data
+            }
+        })

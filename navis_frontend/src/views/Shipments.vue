@@ -4,20 +4,29 @@
     <div class="w-10/12">
         <div class="pl-6 pr-6 font-base">
             <Search />
-            <DeleteModal/>
-            <Notification/>
+            <DeleteModal />
+            <Notification />
             <div class="flex font-base mt-5 justify-between">
                 <div class="flex gap-4 items-center">
                     <h1 class="text-2xl font-extrabold">Shipments</h1>
-                    <div>
-                        <button @click="setShipmentFilter('arrival')" :class="currentShimentFilter === 'arrival' ? 'bg-violet-600 text-white' : 'text-gray-950 bg-white' " class="text-xs py-1.5 px-4 rounded-md">All({{ shipments.length }})</button>
+                    <div class="relative ml-5 ">
+                        <input v-model="text" class="pl-8 w-96 bg-white py-2.5 rounded-md focus:outline-none font-base text-sm placeholder:text-xs" type="text" placeholder="Search shipments by shipment number">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 text-gray-400 absolute top-2.5 left-2 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                        </svg>
                     </div>
                     <div>
-                        <button @click="setShipmentFilter('available')" :class="currentShimentFilter === 'available' ? 'bg-violet-600 text-white' : 'text-gray-950 bg-white' " class=" text-xs py-1.5 px-4 rounded-md">Available({{ shipments.length }})</button>
+                        <button @click="setShipmentFilter('arrival')" :class="currentShimentFilter === 'arrival' ? 'bg-violet-600 text-white' : 'text-gray-950 bg-white' " class="text-sm py-2.5 px-4 rounded-md">All({{ shipments.length }})</button>
+                    </div>
+                    <div>
+                        <button @click="setShipmentFilter('available')" :class="currentShimentFilter === 'available' ? 'bg-violet-600 text-white' : 'text-gray-950 bg-white' " class=" text-sm py-2.5 px-4 rounded-md">Available({{ shipments.length }})</button>
                     </div>
 
                 </div>
-                
+                <div>
+                    <NewShipmentDrawer />
+                </div>
+
             </div>
 
             <div v-if="currentShimentFilter === 'arrival'" class="font-base mt-5 rounded-md overflow-x-auto">
@@ -45,7 +54,7 @@
                             <th scope="col" class="px-6 py-3">
                                 arrival date
                             </th>
-                           
+
                             <th scope="col" class="px-6 py-3">
                                 action
                             </th>
@@ -77,7 +86,7 @@
                             <td class="px-6 py-4">
                                 {{ formatDate(shipment.arrival_date) }}
                             </td>
-                           
+
                             <td class="px-6 py-4 flex gap-4">
                                 <svg @click="goToShipmentPage(shipment.id)" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 text-gray-500 cursor-pointer hover:text-violet-500 transition-all duration-300 h-4">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
@@ -134,7 +143,6 @@
 
 <script>
 import Aside from '@/components/Aside.vue';
-import Search from '@/components/Search.vue';
 import moment from 'moment';
 import DeleteModal from '@/components/DeleteModal.vue';
 import Notification from '@/components/Notification.vue';
@@ -142,13 +150,14 @@ import {
     mapActions,
     mapGetters
 } from 'vuex';
+import NewShipmentDrawer from '@/components/NewShipmentDrawer.vue';
 export default {
     name: 'Shipments',
     components: {
         Aside,
-        Search,
         DeleteModal,
-        Notification
+        Notification,
+        NewShipmentDrawer
     },
     data() {
         return {
@@ -187,7 +196,12 @@ export default {
             return ((value / total) * 100).toFixed(2)
         },
         goToShipmentPage(uuid) {
-          this.$router.push({"name": "shipment", "params": {"id": uuid}})
+            this.$router.push({
+                "name": "shipment",
+                "params": {
+                    "id": uuid
+                }
+            })
         },
         removeShipment(shipment) {
             this.emitter.emit("showDeleteModal", {
@@ -209,17 +223,16 @@ export default {
         this.init()
         this.emitter.on("reloadShipments", value => {
             this.init()
-            if(value === "edit"){
+            if (value === "edit") {
                 this.emitter.emit("showNotification", {
-                "action": "edit",
-                "item": this.item
-            })
-            }
-            else if(value === "add") {
+                    "action": "edit",
+                    "item": this.item
+                })
+            } else if (value === "add") {
                 this.emitter.emit("showNotification", {
-                "action": "add",
-                "item": this.item
-            })
+                    "action": "add",
+                    "item": this.item
+                })
             }
         })
         this.emitter.on("deleteShipment", id => {
