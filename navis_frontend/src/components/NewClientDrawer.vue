@@ -1,7 +1,7 @@
 <template>
 <div class="">
-    <button @click="openModal" class="bg-violet-600 flex gap-1 text-xs text-white py-1.5 px-4 rounded-md">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+    <button @click="openModal" class="bg-violet-600 flex gap-1 text-sm text-white py-2 px-12 rounded-md">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
         </svg>
         New client
@@ -12,7 +12,6 @@
         <TransitionChild as="template" enter="duration-300 ease-out" enter-from="opacity-0" enter-to="opacity-100" leave="duration-200 ease-in" leave-from="opacity-100" leave-to="opacity-0">
             <div class="fixed inset-0 bg-black bg-opacity-25" />
         </TransitionChild>
-
         <div class="fixed inset-0 overflow-y-auto">
             <div class="flex font-base items-center justify-center p-4 text-center">
                 <TransitionChild as="template" enter='transform transition ease-in-out duration-500 sm:duration-700' enterFrom='translate-x-full' enterTo='translate-x-0' leave='transform transition ease-in-out duration-500 sm:duration-700' leaveFrom='translate-x-0' leaveTo='translate-x-full'>
@@ -32,17 +31,17 @@
                                 <div class="flex flex-col gap-1">
                                     <label for="first_name">First name</label>
                                     <input v-model="client.first_name" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-500 font-base" placeholder="E.g James ">
-                                   
+
                                 </div>
                                 <div class="flex flex-col gap-1">
                                     <label for="last_name">Last name</label>
                                     <input v-model="client.last_name" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-500 font-base" placeholder="E.g Brown">
-                                    
+
                                 </div>
                                 <div class="flex flex-col gap-1">
                                     <label for="email">Email</label>
                                     <input v-model="client.email" type="email" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-500 font-base" placeholder="E.g jamesbrown@acme.com">
-                                   
+
                                 </div>
                                 <div class="flex flex-col gap-1">
                                     <label for="phone_number">Phone number</label>
@@ -55,7 +54,7 @@
                                 <div class="flex flex-col gap-1">
                                     <label for="location">Location</label>
                                     <select v-model="client.location" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 font-base">
-                                    <option v-for="location in locations" :value="location.id">{{ location.name }}</option>
+                                        <option v-for="location in locations" :value="location.id">{{ location.name }}</option>
                                     </select>
                                 </div>
                                 <div>
@@ -91,7 +90,7 @@ export default {
         TransitionChild,
         Dialog,
         DialogPanel,
-        DialogTitle,
+        DialogTitle
     },
     data() {
         return {
@@ -122,9 +121,10 @@ export default {
         submitNewClient() {
             this.createClient({
                 payload: this.client,
-                cb: (res => {
+                cb: (() => {
                     this.closeModal()
-                    this.emitter.emit("reloadClients")
+                    this.emitter.emit("reloadClients", "add")
+
                 })
             })
         },

@@ -104,9 +104,9 @@ export default {
             this.updateDriver({
                 uuid: this.driver.id,
                 payload: this.driver,
-                cb: (res => {
+                cb: (() => {
                     this.toggleModal()
-                    this.emitter.emit("reloadDrivers")
+                    this.emitter.emit("reloadDrivers", "edit")
                 })
             })
         }

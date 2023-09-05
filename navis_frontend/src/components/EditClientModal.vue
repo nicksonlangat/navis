@@ -12,8 +12,7 @@
                             <DialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900">
                             {{ client?.first_name }}  {{ client?.last_name }}
                         </DialogTitle>
-                        <button @click="deleteClientDetails" class="text-xs bg-red-500 text-white rounded-md py-1.5 px-6">Delete</button>
-                        </div>
+                         </div>
                         <div class="mt-2">
                             <form class="flex text-xs font-base flex-col gap-3">
                                 <div class="flex flex-col gap-1">
@@ -112,18 +111,9 @@ export default {
             this.updateClient({
                 uuid: this.client.id,
                 payload: this.client,
-                cb: (res => {
+                cb: (() => {
                     this.toggleModal()
-                    this.emitter.emit("reloadClients")
-                })
-            })
-        },
-        deleteClientDetails() {
-            this.deleteClient({
-                uuid: this.client.id,
-                cb: (res => {
-                    this.toggleModal()
-                    this.emitter.emit("reloadClients")
+                    this.emitter.emit("reloadClients", "edit")
                 })
             })
         }

@@ -12,8 +12,7 @@
                             <DialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900">
                                 Truck {{truck?.registration_number}}
                             </DialogTitle>
-                            <button @click="deleteTruckDetails" class="text-xs bg-red-500 text-white rounded-md py-1.5 px-6">Delete</button>
-                        </div>
+                                 </div>
                         <div class="mt-2">
                             <form class="flex text-xs font-base flex-col gap-3">
                                 <div class="flex flex-col gap-1">
@@ -113,16 +112,7 @@ export default {
                 payload: this.truck,
                 cb: (res => {
                     this.toggleModal()
-                    this.emitter.emit("reloadTrucks")
-                })
-            })
-        },
-        deleteTruckDetails() {
-            this.deleteTruck({
-                uuid: this.truck.id,
-                cb: (res => {
-                    this.toggleModal()
-                    this.emitter.emit("reloadTrucks")
+                    this.emitter.emit("reloadTrucks", "edit")
                 })
             })
         }
