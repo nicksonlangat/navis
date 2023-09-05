@@ -72,8 +72,10 @@
                                 {{ parcel.item }}
                             </td>
                             <td class="px-6 text-xs py-4">
+                                <span v-if="parcel.status === 'READY'" class="bg-violet-200 text-violet-700 px-2 text-xs py-0.5 rounded">{{ parcel.status }}</span>
+                              
                                 <span v-if="parcel.status === 'DELAYED'" class="bg-pink-200 text-pink-700 px-2 text-xs py-0.5 rounded">{{ parcel.status }}</span>
-                                <span v-if="parcel.status === 'ON WAY'" class="bg-amber-200 text-amber-700 px-2 text-xs py-0.5 rounded">{{ parcel.status }}</span>
+                                <span v-if="parcel.status === 'ON WAY'" class="bg-yellow-200 text-yellow-700 px-2 text-xs py-0.5 rounded">{{ parcel.status }}</span>
                                 <span v-if="parcel.status === 'ARRIVED'" class="bg-emerald-200 text-emerald-700 px-2 text-xs py-0.5 rounded">{{ parcel.status }}</span>
                             </td>
                             <td class="px-6 py-4">

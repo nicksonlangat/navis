@@ -98,7 +98,6 @@
 
 <script>
 import Aside from '@/components/Aside.vue';
-import Search from '@/components/Search.vue';
 import NewClientDrawer from '@/components/NewClientDrawer.vue';
 import EditClientModal from '@/components/EditClientModal.vue';
 import EmptyIllustration from '@/components/EmptyIllustration.vue';
@@ -114,7 +113,6 @@ export default {
     name: 'Clients',
     components: {
         Aside,
-        Search,
         NewClientDrawer,
         EditClientModal,
         EmptyIllustration,

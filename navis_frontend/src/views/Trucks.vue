@@ -103,7 +103,6 @@
 </template>
 <script>
 import Aside from '@/components/Aside.vue';
-import Search from '@/components/Search.vue';
 import NewTruckDrawer from '@/components/NewTruckDrawer.vue';
 import EditTruckModal from '@/components/EditTruckModal.vue';
 import EmptyIllustration from '@/components/EmptyIllustration.vue';
@@ -119,7 +118,6 @@ export default {
     name: 'Trucks',
     components: {
         Aside,
-        Search,
         NewTruckDrawer,
         EditTruckModal,
         EmptyIllustration,

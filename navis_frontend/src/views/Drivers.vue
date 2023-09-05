@@ -91,27 +91,22 @@
     </div>
 </div>
 </template>
-
 <script>
 import Aside from '@/components/Aside.vue';
-import Search from '@/components/Search.vue';
 import NewDriverDrawer from '@/components/NewDriverDrawer.vue';
 import EditDriverModal from '@/components/EditDriverModal.vue';
 import EmptyIllustration from '@/components/EmptyIllustration.vue';
 import DeleteModal from '@/components/DeleteModal.vue';
-
 import {
     mapActions,
     mapGetters
 } from 'vuex';
 import moment from "moment"
 import Notification from '@/components/Notification.vue';
-
 export default {
     name: 'Drivers',
     components: {
         Aside,
-        Search,
         NewDriverDrawer,
         EditDriverModal,
         EmptyIllustration,
