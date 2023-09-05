@@ -140,9 +140,9 @@ export default {
         submitNewShipment() {
             this.createShipment({
                 payload: this.shipment,
-                cb: (res => {
+                cb: (() => {
                     this.closeModal()
-                    this.emitter.emit("reloadShipments")
+                    this.emitter.emit("reloadShipments", "add")
                 })
             })
         },

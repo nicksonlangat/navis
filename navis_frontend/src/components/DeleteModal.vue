@@ -20,7 +20,7 @@
                             </svg>
                             <h3 class="text-2xl font-bold">Remove {{ type }} ?</h3>
                             <p class="text-gray-500 text-center">Are you sure you want to remove <span class="text-violet-600 underline">{{ data }}</span> from the system?</p>
-                          <div class="flex gap-5">
+                          <div class="flex text-sm gap-5">
                             <button @click="toggleModal" class="bg-[#F1F1FB] focus:outline-none focus:ring-0 px-12 py-1.5 text-gray-700 rounded-md">Cancel</button>
                             <button @click="confirmDeletion" class="bg-red-500 text-white px-6 py-1.5 focus:outline-none focus:ring-0 rounded-md">Yes, remove</button>
                           </div>

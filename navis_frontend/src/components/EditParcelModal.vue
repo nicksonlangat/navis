@@ -121,18 +121,9 @@ export default {
             this.updateParcel({
                 uuid: this.parcel.id,
                 payload: this.parcel,
-                cb: (res => {
+                cb: (() => {
                     this.toggleModal()
-                    this.emitter.emit("reloadParcels")
-                })
-            })
-        },
-        deleteParcelDetails() {
-            this.deleteParcel({
-                uuid: this.parcel.id,
-                cb: (res => {
-                    this.toggleModal()
-                    this.emitter.emit("reloadParcels")
+                    this.emitter.emit("reloadParcels", "edit")
                 })
             })
         }

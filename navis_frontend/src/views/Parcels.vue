@@ -7,8 +7,8 @@
                 <div class="flex gap-4 items-center">
                     <h1 class="text-2xl font-extrabold">Parcels</h1>
                     <div class="relative ml-5">
-                        <input v-model="text" class="pl-8 w-56 bg-white py-1.5 rounded-md focus:outline-none font-base text-xs placeholder:text-xs" type="text" placeholder="Search by parcel number">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 text-gray-400 absolute top-1 left-1 h-5">
+                        <input v-model="text" class="pl-8 w-56 bg-white py-2 rounded-md focus:outline-none font-base text-sm placeholder:text-xs" type="text" placeholder="Search by parcel number">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 text-gray-400 absolute top-2 left-2 h-5">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                         </svg>
                     </div>
@@ -18,6 +18,7 @@
                         <NewParcelDrawer/>
                         <EditParcelModal/>
                         <DeleteModal/>
+                        <Notification/>
                     </div>
                 </div>
             </div>
@@ -109,11 +110,13 @@ import NewParcelDrawer from '@/components/NewParcelDrawer.vue';
 import EditParcelModal from '@/components/EditParcelModal.vue';
 import EmptyIllustration from '@/components/EmptyIllustration.vue';
 import DeleteModal from '@/components/DeleteModal.vue';
+
 import {
     mapActions,
     mapGetters
 } from 'vuex';
 import moment from "moment"
+import Notification from '@/components/Notification.vue';
 export default {
     name: 'Parcels',
     components: {
@@ -121,11 +124,13 @@ export default {
         NewParcelDrawer,
         EditParcelModal,
         EmptyIllustration,
-        DeleteModal
+        DeleteModal,
+        Notification
     },
     data() {
         return {
-            text: ""
+            text: "",
+            item: "Parcel"
         }
     },
     computed: {
@@ -174,9 +179,25 @@ export default {
         this.init()
         this.emitter.on("reloadParcels", value => {
             this.init()
+            if(value === "edit"){
+                this.emitter.emit("showNotification", {
+                "action": "edit",
+                "item": this.item
+            })
+            }
+            else if(value === "add") {
+                this.emitter.emit("showNotification", {
+                "action": "add",
+                "item": this.item
+            })
+            }
         })
         this.emitter.on("deleteParcel", id => {
             this.deleteConfirmedParcel(id)
+            this.emitter.emit("showNotification", {
+                "action": "delete",
+                "item": this.item
+            })
         })
     }
 }

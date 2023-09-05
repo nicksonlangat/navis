@@ -5,26 +5,19 @@
         <div class="pl-6 pr-6 font-base">
             <Search />
             <DeleteModal/>
+            <Notification/>
             <div class="flex font-base mt-5 justify-between">
                 <div class="flex gap-4 items-center">
                     <h1 class="text-2xl font-extrabold">Shipments</h1>
                     <div>
-                        <button @click="setShipmentFilter('arrival')" :class="currentShimentFilter === 'arrival' ? 'bg-violet-600 text-white' : 'text-gray-950 bg-white' " class="text-xs py-1.5 px-4 rounded-md">All(20)</button>
+                        <button @click="setShipmentFilter('arrival')" :class="currentShimentFilter === 'arrival' ? 'bg-violet-600 text-white' : 'text-gray-950 bg-white' " class="text-xs py-1.5 px-4 rounded-md">All({{ shipments.length }})</button>
                     </div>
                     <div>
-                        <button @click="setShipmentFilter('available')" :class="currentShimentFilter === 'available' ? 'bg-violet-600 text-white' : 'text-gray-950 bg-white' " class=" text-xs py-1.5 px-4 rounded-md">Available(20)</button>
+                        <button @click="setShipmentFilter('available')" :class="currentShimentFilter === 'available' ? 'bg-violet-600 text-white' : 'text-gray-950 bg-white' " class=" text-xs py-1.5 px-4 rounded-md">Available({{ shipments.length }})</button>
                     </div>
 
                 </div>
-                <div class="flex gap-4 items-center">
-                    <div>
-                        <button class="bg-violet-600 text-xs text-white py-1.5 px-4 rounded-md">Sort by: Delayed</button>
-                    </div>
-                    <div>
-                        <button class="bg-white text-xs text-gray-700 py-1.5 px-4 rounded-md">Arrival date: 15 Sept</button>
-                    </div>
-
-                </div>
+                
             </div>
 
             <div v-if="currentShimentFilter === 'arrival'" class="font-base mt-5 rounded-md overflow-x-auto">
@@ -144,6 +137,7 @@ import Aside from '@/components/Aside.vue';
 import Search from '@/components/Search.vue';
 import moment from 'moment';
 import DeleteModal from '@/components/DeleteModal.vue';
+import Notification from '@/components/Notification.vue';
 import {
     mapActions,
     mapGetters
@@ -153,12 +147,14 @@ export default {
     components: {
         Aside,
         Search,
-        DeleteModal
+        DeleteModal,
+        Notification
     },
     data() {
         return {
             currentShimentFilter: 'arrival',
-            text: ''
+            text: '',
+            item: "Shipment"
         }
     },
     computed: {
@@ -213,9 +209,25 @@ export default {
         this.init()
         this.emitter.on("reloadShipments", value => {
             this.init()
+            if(value === "edit"){
+                this.emitter.emit("showNotification", {
+                "action": "edit",
+                "item": this.item
+            })
+            }
+            else if(value === "add") {
+                this.emitter.emit("showNotification", {
+                "action": "add",
+                "item": this.item
+            })
+            }
         })
         this.emitter.on("deleteShipment", id => {
             this.deleteConfirmedShipment(id)
+            this.emitter.emit("showNotification", {
+                "action": "delete",
+                "item": this.item
+            })
         })
     }
 }
