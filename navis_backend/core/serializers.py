@@ -38,8 +38,14 @@ class ParcelSerializer(serializers.ModelSerializer):
 
         def to_representation(self, instance):
             data = super(ParcelSerializer, self).to_representation(instance)
-            data["client"] = UserOutputSerializer(instance.client).data if instance.client else None
-            data["destination"] = LocationSerializer(Location.objects.get(name=instance.destination)).data
+            try:
+                data["client"] = UserOutputSerializer(instance.client).data
+            except AttributeError:
+                 data["client"] = UserOutputSerializer(instance["client"]).data
+            try:
+                data["destination"] = LocationSerializer(Location.objects.get(name=instance.destination)).data
+            except AttributeError:
+                 data["destination"] = LocationSerializer(Location.objects.get(name=instance["destination"])).data
             return data
 
 
@@ -79,9 +85,27 @@ class ShipmentSerializer(serializers.ModelSerializer):
         
         def to_representation(self, instance):
             data = super(ShipmentSerializer, self).to_representation(instance)
-            data["truck"] = TruckSerializer(Truck.objects.get(id=instance.truck.id)).data
-            data["driver"] = DriverSerializer(Driver.objects.get(id=instance.driver.id)).data
-            data["route_from"] = LocationSerializer(Location.objects.get(id=instance.route_from.id)).data
-            data["route_to"] = LocationSerializer(Location.objects.get(id=instance.route_to.id)).data
-            data["parcels"] = ParcelSerializer(instance.parcels.all(), many=True).data
+            try:
+                data["truck"] = TruckSerializer(Truck.objects.get(id=instance.truck.id)).data
+            except AttributeError:
+                data["truck"] = TruckSerializer(Truck.objects.get(id=instance["truck"].id)).data
+            try:
+                data["driver"] = DriverSerializer(Driver.objects.get(id=instance.driver.id)).data
+            except AttributeError:
+                data["driver"] = DriverSerializer(Driver.objects.get(id=instance["driver"].id)).data
+            try:
+                data["route_from"] = LocationSerializer(Location.objects.get(id=instance.route_from.id)).data
+            except AttributeError:
+                data["route_from"] = LocationSerializer(Location.objects.get(id=instance["route_from"].id)).data
+            try:
+                data["route_to"] = LocationSerializer(Location.objects.get(id=instance.route_to.id)).data
+            except AttributeError:
+                data["route_to"] = LocationSerializer(Location.objects.get(id=instance["route_to"].id)).data
+            try:
+                data["parcels"] = ParcelSerializer(instance.parcels.all(), many=True).data
+            except AttributeError:
+                try:
+                    data["parcels"] = ParcelSerializer(instance["parcels"].all(), many=True).data
+                except KeyError:
+                     pass
             return data
