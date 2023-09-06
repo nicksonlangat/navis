@@ -51,7 +51,7 @@
                                 </div>
                                 <div>
                                     <button @click.prevent="updateStaffDetails" class="bg-violet-600 w-full text-center font-base text-white py-2 px-4 rounded-md">
-                                        Update driver
+                                        Update staff
                                     </button>
                                 </div>
                             </form>

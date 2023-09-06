@@ -75,10 +75,10 @@
                                 {{ shipment.truck.carry_weight }}
                             </td>
                             <td class="px-6 py-4">
+                                <span v-if="shipment.status === 'READY'" class="bg-violet-200 text-violet-700 px-2 text-xs py-0.5 rounded">{{ shipment.status }}</span>
                                 <span v-if="shipment.status === 'DELAYED'" class="bg-pink-200 text-pink-700 px-2 text-xs py-0.5 rounded">{{ shipment.status }}</span>
                                 <span v-if="shipment.status === 'ON WAY'" class="bg-amber-200 text-amber-700 px-2 text-xs py-0.5 rounded">{{ shipment.status }}</span>
                                 <span v-if="shipment.status === 'ARRIVED'" class="bg-emerald-200 text-emerald-700 px-2 text-xs py-0.5 rounded">{{ shipment.status }}</span>
-
                             </td>
                             <td class="px-6 py-4">
                                 {{ formatDate(shipment.departure_date) }}
