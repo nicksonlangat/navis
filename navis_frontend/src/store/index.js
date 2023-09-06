@@ -8,7 +8,8 @@ export default createStore({
     trucks: [],
     drivers: [],
     shipments: [],
-    locations: []
+    locations: [],
+    staff: []
   },
   getters: {
     getStoredClients: (state) => {
@@ -29,6 +30,9 @@ export default createStore({
     getStoredLocations: (state) => {
       return state.locations
   },
+  getStoredStaff: (state) => {
+    return state.staff
+},
   },
   mutations: {
     SET_CLIENTS(state, clients) {
@@ -48,7 +52,10 @@ export default createStore({
   },
     SET_LOCATIONS(state, locations) {
       state.locations = locations
-  }
+  },
+  SET_STAFF(state, staff) {
+    state.staff = staff
+}
   },
   actions: {
     async getAllAnalytics({ commit, state }, { setResult=true, cb }) {
@@ -64,6 +71,61 @@ export default createStore({
                 return Promise.reject(error)
             })
     },
+    async createStaff({ commit }, { payload, cb }) {
+        return await Api()
+            .post('/accounts/register/', payload)
+            .then((response) => {
+                if (cb) {
+                    cb(response.data)
+                }
+                return response.data
+            })
+            .catch((error) => {
+                return Promise.reject(error)
+            })
+    },
+    async getAllStaff({ commit, state }, { setResult=true, cb }) {
+        return await Api()
+            .get('/accounts/users')
+            .then((response) => {
+                if (setResult) {
+                    commit('SET_STAFF', response.data.results)
+                }
+                if (cb) {
+                    cb(response.data.results)
+                }
+                return response.data.results
+            })
+            .catch((error) => {
+                return Promise.reject(error)
+            })
+    },
+    async updateStaff({ commit }, { uuid, payload, cb }) {
+        return await Api()
+            .put(`accounts/users/${uuid}/`, payload)
+            .then((response) => {
+                if (cb) {
+                    cb(response.data)
+                }
+                return response.data
+            })
+            .catch((error) => {
+                return Promise.reject(error)
+            })
+      },
+      async deleteStaff({ commit }, { uuid, cb }) {
+        return await Api()
+            .delete(`accounts/users/${uuid}/`)
+            .then((response) => {
+                if (cb) {
+                    cb(response.data)
+                }
+                return response.data
+            })
+            .catch((error) => {
+                return Promise.reject(error)
+            })
+      },
     async createClient({ commit }, { payload, cb }) {
       return await Api()
           .post('clients', payload)
@@ -359,12 +421,7 @@ export default createStore({
             return Promise.reject(error)
         })
 },
-
-  
-
-  },
-
-
+},
   modules: {
   }
 })

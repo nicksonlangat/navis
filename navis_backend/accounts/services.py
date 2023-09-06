@@ -15,7 +15,7 @@ def get_tokens_for_user(user):
 
 @transaction.atomic
 def user_update(*, user: User, data) -> User:
-    non_side_effect_fields = ["first_name", "last_name"]
+    non_side_effect_fields = []
 
     user, has_updated = model_update(instance=user, fields=non_side_effect_fields, data=data)
 

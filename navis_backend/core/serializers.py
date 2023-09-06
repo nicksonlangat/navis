@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from accounts.serializers import UserOutputSerializer
+from accounts.serializers import UserSerializer
 from .models import Location, Client, Parcel, Truck, Driver, Shipment
 
 class LocationSerializer(serializers.ModelSerializer):
@@ -39,9 +39,9 @@ class ParcelSerializer(serializers.ModelSerializer):
         def to_representation(self, instance):
             data = super(ParcelSerializer, self).to_representation(instance)
             try:
-                data["client"] = UserOutputSerializer(instance.client).data
+                data["client"] = ClientSerializer(instance.client).data
             except AttributeError:
-                 data["client"] = UserOutputSerializer(instance["client"]).data
+                 data["client"] = ClientSerializer(instance["client"]).data
             try:
                 data["destination"] = LocationSerializer(Location.objects.get(name=instance.destination)).data
             except AttributeError:

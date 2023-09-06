@@ -1,47 +1,28 @@
-from django.contrib.auth.password_validation import validate_password
-
-from rest_framework import serializers, status, exceptions
+from rest_framework import status, exceptions
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-from .services import get_tokens_for_user
-
+from .services import get_tokens_for_user, user_update
+from rest_framework.generics import (
+    CreateAPIView, ListAPIView, 
+    RetrieveUpdateAPIView, RetrieveDestroyAPIView
+)
 from common.pagination import (
     LimitOffsetPagination,
     get_paginated_response,
 )
+from .serializers import UserRegisterSerializer, UserSerializer
 from .models import User
 from .selectors import user_list
 
+class UserRegisterApi(CreateAPIView):
 
-class UserCreateApi(APIView):
-    class InputSerializer(serializers.ModelSerializer):
-        class Meta:
-            model = User
-            fields = ["email", "password", "first_name", "last_name"]
-            extra_kwargs = {"password": {"write_only": True}}
+    serializer_class = UserRegisterSerializer
 
-        def validate_password(self, value):
-            validate_password(value)
-            return value
-
-        def create(self, validated_data):
-            user = User(**validated_data)
-            user.set_password(validated_data["password"])
-            user.save()
-            return user
-
-    def post(self, request):
-        serializer = self.InputSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(
-                {
-                    "success": True,
-                },
-                status=status.HTTP_201_CREATED,
-            )
-        return Response(serializer._errors, status=status.HTTP_400_BAD_REQUEST)
+    def perform_create(self, serializer):
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 class UserLoginApi(APIView):
@@ -64,31 +45,37 @@ class UserLoginApi(APIView):
         return response
     
 
-class UserListApi(APIView):
+class UserListApi(ListAPIView, RetrieveUpdateAPIView, RetrieveDestroyAPIView):
     class Pagination(LimitOffsetPagination):
         default_limit = 25
+    
+    serializer_class = UserSerializer
+    queryset = user_list()
 
-    class FilterSerializer(serializers.Serializer):
-        id = serializers.IntegerField(required=False)
-        is_superuser = serializers.BooleanField(required=False, allow_null=True, default=None)
-        email = serializers.EmailField(required=False)
-
-    class OutputSerializer(serializers.ModelSerializer):
-        class Meta:
-            model = User
-            fields = ("id", "email", "first_name", "last_name", "is_superuser")
-
-    def get(self, request):
-        # Make sure the filters are valid, if passed
-        filters_serializer = self.FilterSerializer(data=request.query_params)
-        filters_serializer.is_valid(raise_exception=True)
-
-        users = user_list(filters=filters_serializer.validated_data)
+    def get(self, request, *args, **kwargs):
+        users = user_list(filters=request.query_params)
 
         return get_paginated_response(
             pagination_class=self.Pagination,
-            serializer_class=self.OutputSerializer,
+            serializer_class=self.serializer_class,
             queryset=users,
             request=request,
             view=self,
         )
+    
+    def patch(self, request, pk, format=None):  
+        user = User.objects.get(id=pk)
+        serializer = self.serializer_class(user, data=request.data)
+        if serializer.is_valid():
+            user_update(user, data=serializer.data)
+            return Response(
+                serializer.data,
+                status=status.HTTP_201_CREATED,
+            )
+        return Response(serializer._errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+    def delete(self, request, pk, format=None):
+        user = User.objects.get(id=pk)
+        user.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
