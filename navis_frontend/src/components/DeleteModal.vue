@@ -77,6 +77,9 @@ export default {
             else if(this.type === "Shipment") {
                 this.deleteShipment()
             }
+            else if(this.type === "Staff") {
+                this.deleteStaff()
+            }
             this.toggleModal()
         },
         deleteClient() {
@@ -93,6 +96,9 @@ export default {
         },
         deleteShipment() {
             this.emitter.emit("deleteShipment", this.id)
+        },
+        deleteStaff() {
+            this.emitter.emit("deleteStaff", this.id)
         }
     },
     mounted() {
