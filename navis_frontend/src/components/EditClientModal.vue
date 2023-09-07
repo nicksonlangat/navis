@@ -14,33 +14,33 @@
                         </DialogTitle>
                          </div>
                         <div class="mt-2">
-                            <form class="flex text-xs font-base flex-col gap-3">
+                            <form class="flex text-sm font-base flex-col gap-3">
                                 <div class="flex flex-col gap-1">
                                     <label for="first_name">First name</label>
-                                    <input v-model="client.first_name" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-500 font-base" placeholder="E.g James ">
+                                    <input v-model="client.first_name" type="text" class="bg-white border border-gray-200 focus:outline-none shadow-sm focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-500 font-base" placeholder="E.g James ">
                                    
                                 </div>
                                 <div class="flex flex-col gap-1">
                                     <label for="last_name">Last name</label>
-                                    <input v-model="client.last_name" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-500 font-base" placeholder="E.g Brown">
+                                    <input v-model="client.last_name" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 shadow-sm rounded-md pl-3 placeholder:text-gray-500 font-base" placeholder="E.g Brown">
                                     
                                 </div>
                                 <div class="flex flex-col gap-1">
                                     <label for="email">Email</label>
-                                    <input v-model="client.email" type="email" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-500 font-base" placeholder="E.g jamesbrown@acme.com">
+                                    <input v-model="client.email" type="email" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 shadow-sm rounded-md pl-3 placeholder:text-gray-500 font-base" placeholder="E.g jamesbrown@acme.com">
                                    
                                 </div>
                                 <div class="flex flex-col gap-1">
                                     <label for="phone_number">Phone number</label>
-                                    <input v-model="client.phone_number" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-500 font-base" placeholder="E.g 0712345765">
+                                    <input v-model="client.phone_number" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 shadow-sm py-2 rounded-md pl-3 placeholder:text-gray-500 font-base" placeholder="E.g 0712345765">
                                 </div>
                                 <div class="flex flex-col gap-1">
                                     <label for="identity_number">Identity number</label>
-                                    <input v-model="client.identity_number" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-500 font-base" placeholder="E.g 22886544">
+                                    <input v-model="client.identity_number" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 shadow-sm rounded-md pl-3 placeholder:text-gray-500 font-base" placeholder="E.g 22886544">
                                 </div>
                                 <div class="flex flex-col gap-1">
                                     <label for="location">Location</label>
-                                    <select v-model="client.location" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 font-base">
+                                    <select v-model="client.location" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 shadow-sm rounded-md pl-3 font-base">
                                     <option v-for="location in locations" :value="location.id">{{ location.name }}</option>
                                     </select>
                                 </div>

@@ -5,7 +5,7 @@
             <img src="../assets//logo.png" class="h-32 w-32 rounded-full object-cover" alt="">
         </div>
         <h3 class="text-3xl font-bold">Welcome back</h3>
-        <p class="text-sm text-gray-600 mt-3">Please enter your details to sign in</p>
+        <p class="text-sm text-gray-600 mt-3">Please enter your details to log in</p>
         <div class="flex mt-5 text-start flex-col gap-2 mr-5 ml-5">
             <label for="email" class="text-gray-800 text-sm">Email address</label>
             <input type="email" class="border border-gray-200 shadow-sm focus:ring-0 focus:outline-none bg-white py-2 rounded-md pl-4" placeholder="Enter your email">

@@ -27,35 +27,35 @@
                         </div>
 
                         <p class="font-base text-gray-500 ml-2 mt-3">Enter package details below</p>
-                        <div class="mt-12 ml-3">
-                            <form class="flex text-xs font-base flex-col gap-6">
+                        <div class="mt-8 ml-3">
+                            <form class="flex text-sm font-base flex-col gap-6">
                                 <div class="flex flex-col gap-1">
                                     <label for="client">Client</label>
-                                    <select v-model="parcel.client" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 font-base">
+                                    <select v-model="parcel.client" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md shadow-sm pl-3 font-base">
                                         <option v-for="client in clients" :value="client.id">{{ client.first_name }} {{ client.last_name }}</option>
                                     </select>
                                 </div>
                                 <div class="flex flex-col gap-1">
                                     <label for="item">Item</label>
-                                    <input v-model="parcel.item" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-500 font-base" placeholder="E.g Macbook Air">
+                                    <input v-model="parcel.item" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-400 shadow-sm font-base" placeholder="E.g Macbook Air">
                                 </div>
                                 <div class="flex flex-col gap-1">
                                     <label for="weight">Weight</label>
-                                    <input v-model="parcel.weight" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-500 font-base" placeholder="E.g 50">
+                                    <input v-model="parcel.weight" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-400 shadow-sm font-base" placeholder="E.g 50">
                                 </div>
                                 <div class="flex flex-col gap-1">
                                     <label for="location">Destination</label>
-                                    <select v-model="parcel.destination" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 font-base">
+                                    <select v-model="parcel.destination" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 shadow-sm rounded-md pl-3 font-base">
                                     <option v-for="location in locations" :value="location.id">{{ location.name }}</option>
                                     </select>
                                 </div>
                                 <div class="flex flex-col gap-1">
                                     <label for="recipient_contact">Recipient contact</label>
-                                    <input v-model="parcel.recipient_contact" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-500 font-base" placeholder="E.g 0712345676">
+                                    <input v-model="parcel.recipient_contact" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-400 shadow-sm font-base" placeholder="E.g 0712345676">
                                 </div>
                                 <div class="flex flex-col gap-1">
                                     <label for="status">Status</label>
-                                    <select v-model="parcel.status" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-500 font-base" placeholder="Brown">
+                                    <select v-model="parcel.status" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-400 shadow-sm font-base" placeholder="Brown">
                                         <option value="READY">Ready</option>
                                         <option value="ON WAY">On way</option>
                                         <option value="DELAYED">Delayed</option>

@@ -99,18 +99,35 @@
 
                     </tbody>
                 </table>
+                <ul v-if="shipments.length" class="mt-2 text-sm font-base inline-flex -space-x-px items-center divide-x">
+                            <li>
+                                <a href="#" class="flex items-center text-gray-300 justify-center px-4 h-10 ml-0 leading-tight bg-white rounded-l-md">Previous</a>
+                            </li>
+                            <li>
+                                <a href="#" class="flex items-center text-violet-600 justify-center px-4 h-10 leading-tight bg-white">1</a>
+                            </li>
+                            <li>
+                                <a href="#" class="flex items-center justify-center px-4 h-10 leading-tight bg-white">2</a>
+                            </li>
+                            <li>
+                                <a href="#" class="flex items-center justify-center px-4 h-10 leading-tight bg-white">3</a>
+                            </li>
+                            <li>
+                                <a href="#" class="flex items-center justify-center px-4 h-10 ml-0 leading-tight bg-white rounded-r-md">Next</a>
+                            </li>
+                        </ul>
             </div>
             <div v-if="currentShimentFilter === 'available'" class="grid font-base mt-8 grid-cols-2 gap-y-4 gap-4">
-                <div v-for="shipment in shipments" @click="goToShipmentPage(shipment.id)" class="bg-white rounded-md cursor-pointer hover:shadow-md transition-shadow duration-500 h-80">
+                <div v-for="shipment in shipments.slice(-4)" @click="goToShipmentPage(shipment.id)" class="bg-white rounded-md cursor-pointer hover:shadow-md transition-shadow duration-500 h-80">
                     <div class="flex font-base justify-between ml-5 mr-5 mt-3">
                         <h3 class="text-xl"> {{ shipment.route_from.name }} - {{ shipment.route_to.name }} <span class="text-xs text-gray-500"> {{ formatDate(shipment.departure_date) }}</span></h3>
-                        <h2 class="text-red-600 text-2xl"> {{percentageCalculator(5000, shipment.truck.carry_weight) }}%</h2>
+                        <h2 class="text-violet-600 text-2xl"> {{percentageCalculator(0, shipment.truck.carry_weight) }}%</h2>
                     </div>
                     <div class="flex justify-between ml-5 mr-5 mt-5 text-sm">
                         <ul class="text-gray-500 flex font-base flex-col gap-5">
                             <li>
                                 <p>Available,kg</p>
-                                <p class="text-gray-900">20/{{ shipment.truck.carry_weight }}</p>
+                                <p class="text-gray-900">0/{{ shipment.truck.carry_weight }}</p>
                             </li>
                             <li>
                                 <p>Shipment number</p>
@@ -136,6 +153,23 @@
                 </div>
 
             </div>
+            <ul v-if="currentShimentFilter === 'available'" class="mt-2 text-sm font-base inline-flex -space-x-px items-center divide-x">
+                            <li>
+                                <a href="#" class="flex items-center text-gray-300 justify-center px-4 h-10 ml-0 leading-tight bg-white rounded-l-md">Previous</a>
+                            </li>
+                            <li>
+                                <a href="#" class="flex items-center text-violet-600 justify-center px-4 h-10 leading-tight bg-white">1</a>
+                            </li>
+                            <li>
+                                <a href="#" class="flex items-center justify-center px-4 h-10 leading-tight bg-white">2</a>
+                            </li>
+                            <li>
+                                <a href="#" class="flex items-center justify-center px-4 h-10 leading-tight bg-white">3</a>
+                            </li>
+                            <li>
+                                <a href="#" class="flex items-center justify-center px-4 h-10 ml-0 leading-tight bg-white rounded-r-md">Next</a>
+                            </li>
+                        </ul>
         </div>
     </div>
 </div>

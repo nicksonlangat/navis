@@ -14,38 +14,38 @@
                             </DialogTitle>
                                  </div>
                         <div class="mt-2">
-                            <form class="flex text-xs font-base flex-col gap-3">
+                            <form class="flex text-sm font-base flex-col gap-3">
                                 <div class="flex flex-col gap-1">
                                     <label for="manufacturer">Manufacturer</label>
-                                    <input v-model="truck.manufacturer" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-500 font-base" placeholder="E.g Iveco ">
+                                    <input v-model="truck.manufacturer" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md shadow-sm pl-3 placeholder:text-gray-500 font-base" placeholder="E.g Iveco ">
                                 </div>
                                 <div class="flex flex-col gap-1">
                                     <label for="model">Model</label>
-                                    <input v-model="truck.model" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-500 font-base" placeholder="E.g 80E18 ">
+                                    <input v-model="truck.model" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 shadow-sm placeholder:text-gray-500 font-base" placeholder="E.g 80E18 ">
                                 </div>
                                 <div class="flex flex-col gap-1">
                                     <label for="yom">Year of manufacture</label>
-                                    <input v-model="truck.yom" type="date" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-500 font-base" placeholder="E.g Iveco ">
+                                    <input v-model="truck.yom" type="date" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 shadow-sm placeholder:text-gray-500 font-base" placeholder="E.g Iveco ">
                                 </div>
                                 <div class="flex flex-col gap-1">
                                     <label for="chasis_number">Chasis number</label>
-                                    <input v-model="truck.chasis_number" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-500 font-base" placeholder="E.g KYEG566543 ">
+                                    <input v-model="truck.chasis_number" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 shadow-sm placeholder:text-gray-500 font-base" placeholder="E.g KYEG566543 ">
                                 </div>
                                 <div class="flex flex-col gap-1">
                                     <label for="registration_number">Registration number</label>
-                                    <input v-model="truck.registration_number" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-500 font-base" placeholder="E.g KDL 654R ">
+                                    <input v-model="truck.registration_number" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md shadow-sm pl-3 placeholder:text-gray-500 font-base" placeholder="E.g KDL 654R ">
                                 </div>
                                 <div class="flex flex-col gap-1">
                                     <label for="engine_size">Engine size</label>
-                                    <input v-model="truck.engine_size" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-500 font-base" placeholder="E.g 3000 CC ">
+                                    <input v-model="truck.engine_size" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 shadow-sm placeholder:text-gray-500 font-base" placeholder="E.g 3000 CC ">
                                 </div>
                                 <div class="flex flex-col gap-1">
                                     <label for="engine_power">Engine power</label>
-                                    <input v-model="truck.engine_power" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-500 font-base" placeholder="E.g 530 HP ">
+                                    <input v-model="truck.engine_power" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 shadow-sm placeholder:text-gray-500 font-base" placeholder="E.g 530 HP ">
                                 </div>
                                 <div class="flex flex-col gap-1">
                                     <label for="weight">Carry weight</label>
-                                    <input v-model="truck.carry_weight" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-500 font-base" placeholder="E.g 120000 KGS ">   
+                                    <input v-model="truck.carry_weight" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 shadow-sm placeholder:text-gray-500 font-base" placeholder="E.g 120000 KGS ">   
                                 </div>
                                 <div>
                                     <button @click.prevent="updateTruckDetails" class="bg-violet-600 w-full text-center font-base text-white py-2 px-4 rounded-md">
