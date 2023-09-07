@@ -94,21 +94,20 @@
                     </tbody>
                 </table>
                 <ul v-if="trucks.length" class="mt-2 text-sm font-base inline-flex -space-x-px items-center divide-x">
-                            <li>
-                                <a href="#" class="flex items-center text-gray-300 justify-center px-4 h-10 ml-0 leading-tight bg-white rounded-l-md">Previous</a>
-                            </li>
-                            <li>
-                                <a href="#" class="flex items-center text-violet-600 justify-center px-4 h-10 leading-tight bg-white">1</a>
-                            </li>
-                            <li>
-                                <a href="#" class="flex items-center justify-center px-4 h-10 leading-tight bg-white">2</a>
-                            </li>
-                            <li>
-                                <a href="#" class="flex items-center justify-center px-4 h-10 leading-tight bg-white">3</a>
-                            </li>
-                            <li>
-                                <a href="#" class="flex items-center justify-center px-4 h-10 ml-0 leading-tight bg-white rounded-r-md">Next</a>
-                            </li>
+                    <li @click="goToLastPage"
+                    :class="previousPage === '' || previousPage == null ? 'text-gray-300' : 'text-gray-600'"
+                    class="flex cursor-pointer items-center justify-center px-4 h-10 ml-0 leading-tight bg-white rounded-l-md">
+                        Previous
+                    </li>
+                    <li v-for="i in totalPages" :class="currentPage == i ? 'text-violet-600' : 'text-gray-600'" class="flex items-center justify-center px-4 h-10 leading-tight bg-white">
+                        {{ i }}
+                    </li>
+
+                    <li @click="goToNextPage"
+                    :class="nextPage === '' || nextPage == null ? 'text-gray-300' : 'text-gray-600'"
+                    class="flex cursor-pointer items-center justify-center px-4 h-10 ml-0 leading-tight bg-white rounded-r-md">
+                        Next
+                    </li>
                         </ul>
                 <div v-else>
                     <EmptyIllustration data="trucks" />
@@ -127,7 +126,8 @@ import DeleteModal from '@/components/DeleteModal.vue';
 
 import {
     mapActions,
-    mapGetters
+    mapGetters,
+    mapMutations
 } from 'vuex';
 import moment from "moment"
 import Notification from '@/components/Notification.vue';
@@ -144,7 +144,11 @@ export default {
     data() {
         return {
             text: "",
-            item: "Truck"
+            item: "Truck",
+            totalPages: 0,
+            previousPage: "",
+            nextPage: "",
+            currentPage: ""
         }
     },
     computed: {
@@ -162,9 +166,29 @@ export default {
             getAllTrucks: 'getAllTrucks',
             deleteTruck: 'deleteTruck',
         }),
+        ...mapMutations({
+            INCREASE_PAGE: 'INCREASE_PAGE',
+            DECREASE_PAGE: 'DECREASE_PAGE',
+        }),
+        goToNextPage() {
+           if (this.nextPage!=null){
+            this.INCREASE_PAGE()
+            this.init()
+           }
+        },
+        goToLastPage() {
+            if (this.previousPage != null) {
+                this.DECREASE_PAGE()
+                this.init()
+            }},
         init() {
             this.getAllTrucks({
-                cb: (res) => {}
+                cb: (res) => {
+                    this.previousPage = res.previous
+                    this.nextPage = res.next
+                    this.totalPages = res.total_pages
+                    this.currentPage = res.current_page_number
+                }
             })
         },
         formatDate(date) {

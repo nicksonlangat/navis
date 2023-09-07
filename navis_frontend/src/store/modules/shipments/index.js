@@ -2,11 +2,18 @@
 import Api from '@/services/Api'
 const state = {
     shipments: [],
+    pageNumber: 1
 }
 
 const mutations = {
   SET_SHIPMENTS (state, payload) {
     state.shipments = payload
+  },
+  INCREASE_PAGE(state) {
+    state.pageNumber++
+  },
+  DECREASE_PAGE(state) {
+    state.pageNumber--
   }
 }
 
@@ -26,15 +33,15 @@ const actions = {
       },
       async getAllShipments({ commit, state }, { setResult=true, cb }) {
       return await Api()
-          .get('/shipments')
+          .get(`/shipments?page=${state.pageNumber}`)
           .then((response) => {
               if (setResult) {
                   commit('SET_SHIPMENTS', response.data.results)
               }
               if (cb) {
-                  cb(response.data.results)
+                  cb(response.data)
               }
-              return response.data.results
+              return response.data
           })
           .catch((error) => {
               return Promise.reject(error)

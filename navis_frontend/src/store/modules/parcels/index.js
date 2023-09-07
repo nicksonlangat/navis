@@ -2,11 +2,18 @@
 import Api from '@/services/Api'
 const state = {
   parcels: [],
+  pageNumber: 1,
 }
 
 const mutations = {
   SET_PARCELS (state, payload) {
     state.parcels = payload
+  },
+  INCREASE_PAGE(state) {
+    state.pageNumber++
+  },
+  DECREASE_PAGE(state) {
+    state.pageNumber--
   }
 }
 
@@ -26,15 +33,15 @@ const actions = {
       },
       async getAllParcels({ commit, state }, { setResult=true, cb, destination }) {
       return await Api()
-          .get(`/parcels?destination=${destination}`)
+          .get(`/parcels?page=${state.pageNumber}&destination=${destination}`)
           .then((response) => {
               if (setResult) {
                   commit('SET_PARCELS', response.data.results)
               }
               if (cb) {
-                  cb(response.data.results)
+                  cb(response.data)
               }
-              return response.data.results
+              return response.data
           })
           .catch((error) => {
               return Promise.reject(error)

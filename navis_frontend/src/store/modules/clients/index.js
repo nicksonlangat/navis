@@ -2,7 +2,8 @@
 import Api from '@/services/Api'
 const state = {
   clients: [],
-  locations: []
+  locations: [],
+  pageNumber: 1
 }
 
 const mutations = {
@@ -11,7 +12,13 @@ const mutations = {
   },
   SET_LOCATIONS(state, payload) {
     state.locations = payload
-}
+},
+INCREASE_PAGE(state) {
+    state.pageNumber++
+  },
+  DECREASE_PAGE(state) {
+    state.pageNumber--
+  }
 }
 
 const actions = {
@@ -30,15 +37,15 @@ const actions = {
 },
   async getAllClients({ commit, state }, { setResult=true, cb }) {
     return await Api()
-        .get('/clients')
+        .get(`/clients?page=${state.pageNumber}`)
         .then((response) => {
             if (setResult) {
                 commit('SET_CLIENTS', response.data.results)
             }
             if (cb) {
-                cb(response.data.results)
+                cb(response.data)
             }
-            return response.data.results
+            return response.data
         })
         .catch((error) => {
             return Promise.reject(error)
