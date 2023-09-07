@@ -18,7 +18,7 @@
                 <TransitionChild as="template" enter='transform transition ease-in-out duration-500 sm:duration-700' enterFrom='translate-x-full' enterTo='translate-x-0' leave='transform transition ease-in-out duration-500 sm:duration-700' leaveFrom='translate-x-0' leaveTo='translate-x-full'>
                     <DialogPanel class="fixed w-[500px] top-0 h-full right-0 z-40 transform overflow-hidden rounded-md bg-white p-6 text-left align-middle shadow-xl transition-all">
                         <div class="ml-2 flex justify-between mr-2">
-                            <DialogTitle as="h3" class="font-medium leading-6  font-base text-xl">
+                            <DialogTitle @click="load" as="h3" class="font-medium leading-6  font-base text-xl">
                                 New staff
                             </DialogTitle>
                             <svg @click="closeModal" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 font-base cursor-pointer h-6">
@@ -27,36 +27,36 @@
                         </div>
 
                         <p class="font-base text-gray-500 ml-2 mt-3">Enter staff's details below</p>
-                        <div class="mt-12 ml-3">
-                            <form class="flex text-xs font-base flex-col gap-6">
+                        <div class="mt-8 ml-3">
+                            <form class="flex text-sm font-base flex-col gap-6">
                                 <div class="flex flex-col gap-1">
                                     <label for="first_name">First name</label>
-                                    <input v-model="staff.first_name" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-500 font-base" placeholder="E.g Daniel ">
+                                    <input v-model="staff.first_name" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-400 shadow-sm font-base" placeholder="E.g Daniel ">
                                 </div>
                                 <div class="flex flex-col gap-1">
                                     <label for="last_name">Last name</label>
-                                    <input v-model="staff.last_name" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-500 font-base" placeholder="E.g Smith ">
+                                    <input v-model="staff.last_name" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-400 shadow-sm font-base" placeholder="E.g Smith ">
                                 </div>
                                 <div class="flex flex-col gap-1">
                                     <label for="email">Email</label>
-                                    <input v-model="staff.email" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-500 font-base" placeholder="E.g danielsmith@acme.com ">
+                                    <input v-model="staff.email" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-400 shadow-sm font-base" placeholder="E.g danielsmith@acme.com ">
                                 </div>
                                 <div class="flex flex-col gap-1">
                                     <label for="phone_number">Phone number</label>
-                                    <input v-model="staff.phone_number" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-500 font-base" placeholder="E.g 0712345675 ">
+                                    <input v-model="staff.phone_number" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-400 shadow-sm font-base" placeholder="E.g 0712345675 ">
                                 </div>
                                 <div class="flex flex-col gap-1">
                                     <label for="id_number">Id number</label>
-                                    <input v-model="staff.id_number" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-500 font-base" placeholder="E.g 22776544 ">
+                                    <input v-model="staff.id_number" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-400 shadow-sm font-base" placeholder="E.g 22776544 ">
                                 </div>
 
                                 <div class="flex flex-col gap-1">
                                     <label for="kra_pin">KRA pin</label>
-                                    <input v-model="staff.kra_pin" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-500 font-base" placeholder="E.g A02567975U ">
+                                    <input v-model="staff.kra_pin" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-400 shadow-sm font-base" placeholder="E.g A02567975U ">
                                 </div>
                                 <div class="flex flex-col gap-1">
                                     <label for="status">Role</label>
-                                    <select v-model="staff.role" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-500 font-base" placeholder="Brown">
+                                    <select v-model="staff.role" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-400 shadow-sm font-base" placeholder="Brown">
                                         <option value="STAFF">Staff</option>
                                         <option value="MANAGER">Manager</option>
                                         <option value="ADMIN">Admin</option>

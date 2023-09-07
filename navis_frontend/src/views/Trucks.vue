@@ -93,6 +93,23 @@
                         </tr>
                     </tbody>
                 </table>
+                <ul v-if="trucks.length" class="mt-2 text-sm font-base inline-flex -space-x-px items-center divide-x">
+                            <li>
+                                <a href="#" class="flex items-center text-gray-300 justify-center px-4 h-10 ml-0 leading-tight bg-white rounded-l-md">Previous</a>
+                            </li>
+                            <li>
+                                <a href="#" class="flex items-center text-violet-600 justify-center px-4 h-10 leading-tight bg-white">1</a>
+                            </li>
+                            <li>
+                                <a href="#" class="flex items-center justify-center px-4 h-10 leading-tight bg-white">2</a>
+                            </li>
+                            <li>
+                                <a href="#" class="flex items-center justify-center px-4 h-10 leading-tight bg-white">3</a>
+                            </li>
+                            <li>
+                                <a href="#" class="flex items-center justify-center px-4 h-10 ml-0 leading-tight bg-white rounded-r-md">Next</a>
+                            </li>
+                        </ul>
                 <div v-else>
                     <EmptyIllustration data="trucks" />
                 </div>

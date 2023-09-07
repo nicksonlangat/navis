@@ -19,43 +19,43 @@
                             New shipment
                         </DialogTitle>
                         <p class="font-base text-gray-500 ml-2 mt-3">Enter shipment's details below</p>
-                        <div class="mt-12 ml-3">
-                            <form class="flex text-xs font-base flex-col gap-6">
+                        <div class="mt-5 ml-3">
+                            <form class="flex text-sm font-base flex-col gap-6">
                                 <div class="flex flex-col gap-1">
                                     <label for="truck">Truck</label>
-                                    <select v-model="shipment.truck" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-500 font-base">
+                                    <select v-model="shipment.truck" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-400 shadow-sm font-base">
                                         <option v-for="truck in trucks" :value="truck.id">{{ truck.registration_number }} - {{ truck.manufacturer }} {{ truck.model }}</option>
                                     </select>
                                 </div>
                                 <div class="flex flex-col gap-1">
                                     <label for="driver">Driver</label>
-                                    <select v-model="shipment.driver" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-500 font-base">
+                                    <select v-model="shipment.driver" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-400 shadow-sm font-base">
                                         <option v-for="driver in drivers" :value="driver.id">{{ driver.first_name }} {{ driver.last_name }}</option>
                                     </select>
                                 </div>
                                 <div class="flex flex-col gap-1">
                                     <label for="location">Route start</label>
-                                    <select v-model="shipment.route_from" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 font-base">
+                                    <select v-model="shipment.route_from" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 shadow-sm font-base">
                                     <option v-for="location in locations" :value="location.id">{{ location.name }}</option>
                                     </select>
                                 </div>
                                 <div class="flex flex-col gap-1">
                                     <label for="location">Route end</label>
-                                    <select v-model="shipment.route_to" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 font-base">
+                                    <select v-model="shipment.route_to" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 shadow-sm font-base">
                                     <option v-for="location in locations" :value="location.id">{{ location.name }}</option>
                                     </select>
                                 </div>
                                 <div class="flex flex-col gap-1">
                                     <label for="departure">Departure</label>
-                                    <input v-model="shipment.departure_date" type="date" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-500 font-base" placeholder="E.g Iveco ">
+                                    <input v-model="shipment.departure_date" type="date" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-400 shadow-sm font-base" placeholder="E.g Iveco ">
                                 </div>
                                 <div class="flex flex-col gap-1">
                                     <label for="arrival">Arrival</label>
-                                    <input v-model="shipment.arrival_date" type="date" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-500 font-base" placeholder="E.g Iveco ">
+                                    <input v-model="shipment.arrival_date" type="date" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-400 shadow-sm font-base" placeholder="E.g Iveco ">
                                 </div>
                                 <div class="flex flex-col gap-1">
                                     <label for="status">Status</label>
-                                    <select v-model="shipment.status" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-500 font-base" placeholder="Brown">
+                                    <select v-model="shipment.status" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-400 shadow-sm font-base" placeholder="Brown">
                                         <option value="READY">Ready</option>
                                         <option value="ON WAY">On way</option>
                                         <option value="DELAYED">Delayed</option>

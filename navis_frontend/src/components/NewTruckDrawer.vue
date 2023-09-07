@@ -27,39 +27,39 @@
                         </div>
 
                         <p class="font-base text-gray-500 ml-2 mt-3">Enter truck's details below</p>
-                        <div class="mt-8 ml-3">
-                            <form class="flex text-xs font-base flex-col gap-6">
+                        <div class="mt-4 ml-3">
+                            <form class="flex text-sm font-base flex-col gap-5">
                                 <div class="flex flex-col gap-1">
                                     <label for="manufacturer">Manufacturer</label>
-                                    <input v-model="truck.manufacturer" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-500 font-base" placeholder="E.g Iveco ">   
+                                    <input v-model="truck.manufacturer" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-400 shadow-sm font-base" placeholder="E.g Iveco">   
                                 </div>
                                 <div class="flex flex-col gap-1">
                                     <label for="model">Model</label>
-                                    <input v-model="truck.model" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-500 font-base" placeholder="E.g 80E18 ">   
+                                    <input v-model="truck.model" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-400 shadow-sm font-base" placeholder="E.g 80E18 ">   
                                 </div>
                                 <div class="flex flex-col gap-1">
                                     <label for="yom">Year of manufacture</label>
-                                    <input v-model="truck.yom" type="date" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-500 font-base" placeholder="E.g Iveco ">   
+                                    <input v-model="truck.yom" type="date" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-400 shadow-sm font-base" placeholder="E.g Iveco ">   
                                 </div>
                                 <div class="flex flex-col gap-1">
                                     <label for="chasis_number">Chasis number</label>
-                                    <input v-model="truck.chasis_number" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-500 font-base" placeholder="E.g KYEG566543 ">   
+                                    <input v-model="truck.chasis_number" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-400 shadow-sm font-base" placeholder="E.g KYEG566543 ">   
                                 </div>
                                 <div class="flex flex-col gap-1">
                                     <label for="registration_number">Registration number</label>
-                                    <input v-model="truck.registration_number" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-500 font-base" placeholder="E.g KDL 654R ">   
+                                    <input v-model="truck.registration_number" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-400 shadow-sm font-base" placeholder="E.g KDL 654R ">   
                                 </div>
                                 <div class="flex flex-col gap-1">
                                     <label for="engine_size">Engine size</label>
-                                    <input v-model="truck.engine_size" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-500 font-base" placeholder="E.g 3000 CC ">   
+                                    <input v-model="truck.engine_size" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-400 shadow-sm font-base" placeholder="E.g 3000 CC ">   
                                 </div>
                                 <div class="flex flex-col gap-1">
                                     <label for="engine_power">Engine power</label>
-                                    <input v-model="truck.engine_power" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-500 font-base" placeholder="E.g 530 HP ">   
+                                    <input v-model="truck.engine_power" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-400 shadow-sm font-base" placeholder="E.g 530 HP ">   
                                 </div>
                                 <div class="flex flex-col gap-1">
                                     <label for="weight">Carry weight</label>
-                                    <input v-model="truck.carry_weight" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-500 font-base" placeholder="E.g 120000 KGS ">   
+                                    <input v-model="truck.carry_weight" type="text" class="bg-white border border-gray-200 focus:outline-none focus:right-0 py-2 rounded-md pl-3 placeholder:text-gray-400 shadow-sm font-base" placeholder="E.g 120000 KGS ">   
                                 </div>
                                 
                                 <div>

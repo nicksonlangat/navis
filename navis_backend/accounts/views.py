@@ -47,7 +47,7 @@ class UserLoginApi(APIView):
 
 class UserListApi(ListAPIView, RetrieveUpdateAPIView, RetrieveDestroyAPIView):
     class Pagination(LimitOffsetPagination):
-        default_limit = 25
+        default_limit = 13
     
     serializer_class = UserSerializer
     queryset = user_list()

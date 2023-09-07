@@ -15,10 +15,10 @@
                 </div>
                 <div class="flex gap-4 items-center">
                     <div>
-                        <NewParcelDrawer/>
-                        <EditParcelModal/>
-                        <DeleteModal/>
-                        <Notification/>
+                        <NewParcelDrawer />
+                        <EditParcelModal />
+                        <DeleteModal />
+                        <Notification />
                     </div>
                 </div>
             </div>
@@ -35,14 +35,14 @@
                             <th scope="col" class="px-6 py-3">
                                 weight
                             </th>
-                            
+
                             <th scope="col" class="px-6 py-3">
                                 item
                             </th>
                             <th scope="col" class="px-6 py-3">
                                 status
                             </th>
-                           
+
                             <th scope="col" class="px-6 py-3">
                                 date
                             </th>
@@ -66,14 +66,14 @@
                                 {{ parcel.client.first_name }} {{ parcel.client.last_name }}
                             </th>
                             <td class="px-6 py-4">
-                               {{ parcel.weight }}
+                                {{ parcel.weight }}
                             </td>
                             <td class="px-6 py-4">
                                 {{ parcel.item }}
                             </td>
                             <td class="px-6 text-xs py-4">
                                 <span v-if="parcel.status === 'READY'" class="bg-violet-200 text-violet-700 px-2 text-xs py-0.5 rounded">{{ parcel.status }}</span>
-                              
+
                                 <span v-if="parcel.status === 'DELAYED'" class="bg-pink-200 text-pink-700 px-2 text-xs py-0.5 rounded">{{ parcel.status }}</span>
                                 <span v-if="parcel.status === 'ON WAY'" class="bg-yellow-200 text-yellow-700 px-2 text-xs py-0.5 rounded">{{ parcel.status }}</span>
                                 <span v-if="parcel.status === 'ARRIVED'" class="bg-emerald-200 text-emerald-700 px-2 text-xs py-0.5 rounded">{{ parcel.status }}</span>
@@ -82,10 +82,10 @@
                                 {{ formatDate(parcel.created_at) }}
                             </td>
                             <td class="px-6 py-4">
-                               {{ parcel.recipient_contact }}
+                                {{ parcel.recipient_contact }}
                             </td>
                             <td class="px-6 py-4">
-                              {{ parcel.destination.name }}
+                                {{ parcel.destination.name }}
                             </td>
                             <td class="px-6 py-4 flex gap-4">
                                 <svg @click="editParcel(parcel)" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 text-gray-500 cursor-pointer hover:text-violet-500 transition-all duration-300 h-4">
@@ -96,16 +96,35 @@
                                 </svg>
                             </td>
                         </tr>
+
                     </tbody>
                 </table>
+                <ul v-if="parcels.length" class="mt-2 text-sm font-base inline-flex -space-x-px items-center divide-x">
+                    <li>
+                        <a href="#" class="flex items-center text-gray-300 justify-center px-4 h-10 ml-0 leading-tight bg-white rounded-l-md">Previous</a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center text-violet-600 justify-center px-4 h-10 leading-tight bg-white">1</a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center justify-center px-4 h-10 leading-tight bg-white">2</a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center justify-center px-4 h-10 leading-tight bg-white">3</a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center justify-center px-4 h-10 ml-0 leading-tight bg-white rounded-r-md">Next</a>
+                    </li>
+                </ul>
                 <div v-else>
-                <EmptyIllustration data="parcels"/>
-               </div>
+                    <EmptyIllustration data="parcels" />
+                </div>
             </div>
         </div>
     </div>
 </div>
 </template>
+
 <script>
 import Aside from '@/components/Aside.vue';
 import NewParcelDrawer from '@/components/NewParcelDrawer.vue';
@@ -142,7 +161,7 @@ export default {
         parcels() {
             return this.storedParcels.filter((parcel) => {
                 return parcel.parcel_number.toLowerCase().includes(this.text.toLowerCase())
-            }) 
+            })
         }
     },
     methods: {
@@ -181,17 +200,16 @@ export default {
         this.init()
         this.emitter.on("reloadParcels", value => {
             this.init()
-            if(value === "edit"){
+            if (value === "edit") {
                 this.emitter.emit("showNotification", {
-                "action": "edit",
-                "item": this.item
-            })
-            }
-            else if(value === "add") {
+                    "action": "edit",
+                    "item": this.item
+                })
+            } else if (value === "add") {
                 this.emitter.emit("showNotification", {
-                "action": "add",
-                "item": this.item
-            })
+                    "action": "add",
+                    "item": this.item
+                })
             }
         })
         this.emitter.on("deleteParcel", id => {
@@ -204,6 +222,7 @@ export default {
     }
 }
 </script>
+
 <style>
 html {
     background-color: #F1F1FB;
