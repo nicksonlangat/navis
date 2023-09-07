@@ -2,11 +2,18 @@
 import Api from '@/services/Api'
 const state = {
     staff: [],
+    pageNumber: 1
 }
 
 const mutations = {
   SET_STAFF(state, payload) {
     state.staff = payload
+  },
+  INCREASE_PAGE(state) {
+    state.pageNumber++
+  },
+  DECREASE_PAGE(state) {
+    state.pageNumber--
   }
 }
 
@@ -26,13 +33,13 @@ const actions = {
     },
     async getAllStaff({ commit, state }, { setResult=true, cb }) {
         return await Api()
-            .get('/accounts/users')
+            .get(`/accounts/users?page=${state.pageNumber}`)
             .then((response) => {
                 if (setResult) {
                     commit('SET_STAFF', response.data.results)
                 }
                 if (cb) {
-                    cb(response.data.results)
+                    cb(response.data)
                 }
                 return response.data.results
             })

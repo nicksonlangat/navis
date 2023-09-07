@@ -2,18 +2,22 @@ from rest_framework import status, exceptions
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-from .services import get_tokens_for_user, user_update
 from rest_framework.generics import (
     CreateAPIView, ListAPIView, 
     RetrieveUpdateAPIView, RetrieveDestroyAPIView
 )
+
 from common.pagination import (
-    LimitOffsetPagination,
-    get_paginated_response,
+    PageNumberPagination,
+    get_paginated_response
 )
+
 from .serializers import UserRegisterSerializer, UserSerializer
 from .models import User
 from .selectors import user_list
+from .services import get_tokens_for_user, user_update
+
+
 
 class UserRegisterApi(CreateAPIView):
 
@@ -46,8 +50,8 @@ class UserLoginApi(APIView):
     
 
 class UserListApi(ListAPIView, RetrieveUpdateAPIView, RetrieveDestroyAPIView):
-    class Pagination(LimitOffsetPagination):
-        default_limit = 13
+    class Pagination(PageNumberPagination):
+        page_size = 13
     
     serializer_class = UserSerializer
     queryset = user_list()

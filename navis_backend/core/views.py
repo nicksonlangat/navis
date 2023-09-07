@@ -6,11 +6,12 @@ from rest_framework.generics import (
     RetrieveDestroyAPIView
 )
 from rest_framework.views import APIView
+
 from django.db.models import Q
 
 from common.pagination import (
-    LimitOffsetPagination,
-    get_paginated_response,
+    PageNumberPagination,
+    get_paginated_response
 )
 from core.selectors import (
     client_list, parcel_list, 
@@ -41,7 +42,7 @@ class ClientApi(
 
     serializer_class = ClientSerializer
 
-    class Pagination(LimitOffsetPagination):
+    class Pagination(PageNumberPagination):
         default_limit = 13
 
     queryset = client_list()
@@ -87,7 +88,7 @@ class TruckApi(
 
     serializer_class = TruckSerializer
 
-    class Pagination(LimitOffsetPagination):
+    class Pagination(PageNumberPagination):
         default_limit = 13
 
     queryset = truck_list()
@@ -133,7 +134,7 @@ class DriverApi(
 
     serializer_class = DriverSerializer
 
-    class Pagination(LimitOffsetPagination):
+    class Pagination(PageNumberPagination):
         default_limit = 13
 
     queryset = driver_list()
@@ -180,7 +181,7 @@ class ParcelApi(
 
     serializer_class = ParcelSerializer
 
-    class Pagination(LimitOffsetPagination):
+    class Pagination(PageNumberPagination):
         default_limit = 13
 
     queryset = parcel_list()
@@ -226,7 +227,7 @@ class ShipmentApi(
 
     serializer_class = ShipmentSerializer
 
-    class Pagination(LimitOffsetPagination):
+    class Pagination(PageNumberPagination):
         default_limit = 13
 
     queryset = shipment_list()
@@ -271,7 +272,7 @@ class LocationApi(ListAPIView):
 
     serializer_class = LocationSerializer
 
-    class Pagination(LimitOffsetPagination):
+    class Pagination(PageNumberPagination):
         default_limit = 13
 
     queryset = location_list()

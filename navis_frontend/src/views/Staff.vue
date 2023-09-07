@@ -17,8 +17,8 @@
                     <div>
                         <NewStaffDrawer />
                         <EditStaffModal />
-                        <DeleteModal/>
-                        <Notification/>
+                        <DeleteModal />
+                        <Notification />
                     </div>
                 </div>
             </div>
@@ -68,7 +68,7 @@
                             <td class="px-6 py-4">
                                 {{ user.role }}
                             </td>
-                           
+
                             <td class="px-6 py-4">
                                 {{ user.kra_pin }}
                             </td>
@@ -85,22 +85,17 @@
                     </tbody>
                 </table>
                 <ul v-if="staff.length" class="mt-2 text-sm font-base inline-flex -space-x-px items-center divide-x">
-                            <li>
-                                <a href="#" class="flex items-center text-gray-300 justify-center px-4 h-10 ml-0 leading-tight bg-white rounded-l-md">Previous</a>
-                            </li>
-                            <li>
-                                <a href="#" class="flex items-center text-violet-600 justify-center px-4 h-10 leading-tight bg-white">1</a>
-                            </li>
-                            <li>
-                                <a href="#" class="flex items-center justify-center px-4 h-10 leading-tight bg-white">2</a>
-                            </li>
-                            <li>
-                                <a href="#" class="flex items-center justify-center px-4 h-10 leading-tight bg-white">3</a>
-                            </li>
-                            <li>
-                                <a href="#" class="flex items-center justify-center px-4 h-10 ml-0 leading-tight bg-white rounded-r-md">Next</a>
-                            </li>
-                        </ul>
+                    <li @click="goToLastPage" :class="previousPage === '' || previousPage == null ? 'text-gray-300' : 'text-gray-600'" class="flex cursor-pointer items-center justify-center px-4 h-10 ml-0 leading-tight bg-white rounded-l-md">
+                        Previous
+                    </li>
+                    <li v-for="i in totalPages" :class="currentPage == i ? 'text-violet-600' : 'text-gray-600'" class="flex items-center justify-center px-4 h-10 leading-tight bg-white">
+                        {{ i }}
+                    </li>
+
+                    <li @click="goToNextPage" :class="nextPage === '' || nextPage == null ? 'text-gray-300' : 'text-gray-600'" class="flex cursor-pointer items-center justify-center px-4 h-10 ml-0 leading-tight bg-white rounded-r-md">
+                        Next
+                    </li>
+                </ul>
                 <div v-else>
                     <EmptyIllustration data="staff" />
                 </div>
@@ -109,6 +104,7 @@
     </div>
 </div>
 </template>
+
 <script>
 import Aside from '@/components/Aside.vue';
 import NewStaffDrawer from '@/components/NewStaffDrawer.vue';
@@ -117,7 +113,8 @@ import EmptyIllustration from '@/components/EmptyIllustration.vue';
 import DeleteModal from '@/components/DeleteModal.vue';
 import {
     mapActions,
-    mapGetters
+    mapGetters,
+    mapMutations
 } from 'vuex';
 import moment from "moment"
 import Notification from '@/components/Notification.vue';
@@ -134,7 +131,11 @@ export default {
     data() {
         return {
             text: "",
-            item: "Staff"
+            item: "Staff",
+            totalPages: 0,
+            previousPage: "",
+            nextPage: "",
+            currentPage: ""
         }
     },
     computed: {
@@ -142,7 +143,9 @@ export default {
             storedStaff: 'getStoredStaff'
         }),
         staff() {
-            return this.storedStaff
+            return this.storedStaff.filter((staff) => {
+                return staff.id_number.toLowerCase().includes(this.text.toLowerCase())
+            })
         }
     },
     methods: {
@@ -150,9 +153,31 @@ export default {
             getAllStaff: 'getAllStaff',
             deleteStaff: 'deleteStaff',
         }),
+        ...mapMutations({
+            INCREASE_PAGE: 'INCREASE_PAGE',
+            DECREASE_PAGE: 'DECREASE_PAGE',
+        }),
+        goToNextPage() {
+            if (this.nextPage != null) {
+                this.INCREASE_PAGE()
+                this.init()
+            }
+        },
+        goToLastPage() {
+            if (this.previousPage != null) {
+                this.DECREASE_PAGE()
+                this.init()
+            }
+
+        },
         init() {
             this.getAllStaff({
-                cb: () => {}
+                cb: (res) => {
+                    this.previousPage = res.previous
+                    this.nextPage = res.next
+                    this.totalPages = res.total_pages
+                    this.currentPage = res.current_page_number
+                }
             })
         },
         formatDate(date) {
@@ -162,7 +187,11 @@ export default {
             this.emitter.emit("showStaffModal", staff)
         },
         removeStaf(staff) {
-            this.emitter.emit("showDeleteModal", {"type": "Staff", "value": staff.email, "id": staff.id} )
+            this.emitter.emit("showDeleteModal", {
+                "type": "Staff",
+                "value": staff.email,
+                "id": staff.id
+            })
         },
         deleteConfirmedStaff(id) {
             this.deleteStaff({
@@ -177,17 +206,16 @@ export default {
         this.init()
         this.emitter.on("reloadStaff", value => {
             this.init()
-            if(value === "edit"){
+            if (value === "edit") {
                 this.emitter.emit("showNotification", {
-                "action": "edit",
-                "item": this.item
-            })
-            }
-            else if(value === "add") {
+                    "action": "edit",
+                    "item": this.item
+                })
+            } else if (value === "add") {
                 this.emitter.emit("showNotification", {
-                "action": "add",
-                "item": this.item
-            })
+                    "action": "add",
+                    "item": this.item
+                })
             }
         })
         this.emitter.on("deleteStaff", id => {
