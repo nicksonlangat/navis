@@ -76,8 +76,8 @@
     <div class="pl-4 mt-4 font-base flex justify-between mr-5">
         <img src="../assets//user.jpeg" class="h-10 w-10 rounded-full object-cover" alt="">
         <div class="text-gray-500 font-base">
-            <h1 class="text-gray-700">Nick Langat</h1>
-            <p class="text-xs"> Manager</p>
+            <h1 class="text-gray-700">{{ user?.first_name }} {{ user?.last_name }}</h1>
+            <p class="text-xs"> {{ user?.role }}</p>
         </div>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mt-1 cursor-pointer">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
@@ -89,6 +89,7 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
 import NewShipmentDrawer from './NewShipmentDrawer.vue'
 export default {
     components: {
@@ -99,15 +100,38 @@ export default {
             currentRoute: null,
         }
     },
+    computed: {
+        ...mapGetters({
+            storedUser: 'getStoredUser'
+        }),
+        user() {
+            return this.storedUser
+        }
+    },
     methods: {
+        ...mapActions({
+            getUsersMe: 'getUsersMe'
+        }),
         navigateToPage(page) {
             this.$router.push({
                 "name": page
             })
-        }
+        },
+        init() {
+            this.getUsersMe({
+                cb: () => {
+                    
+                }
+            })
+        },
+        logoutUser() {
+            localStorage.removeItem("navis")
+            this.$router.push({"name": "login"})
+        },
     },
     mounted() {
         this.currentRoute = this.$route.name
+        this.init()
     }
 }
 </script>

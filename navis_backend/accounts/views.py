@@ -3,16 +3,17 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from rest_framework.generics import (
-    CreateAPIView, ListAPIView, 
+    CreateAPIView, ListAPIView, RetrieveAPIView,
     RetrieveUpdateAPIView, RetrieveDestroyAPIView
 )
+from rest_framework.permissions import IsAuthenticated
 
 from common.pagination import (
     PageNumberPagination,
     get_paginated_response
 )
 
-from .serializers import UserRegisterSerializer, UserSerializer
+from .serializers import ChangePasswordSerializer, UserRegisterSerializer, UserSerializer
 from .models import User
 from .selectors import user_list
 from .services import get_tokens_for_user, user_update
@@ -47,7 +48,6 @@ class UserLoginApi(APIView):
         token = get_tokens_for_user(user)
         response.data = token
         return response
-    
 
 class UserListApi(ListAPIView, RetrieveUpdateAPIView, RetrieveDestroyAPIView):
     class Pagination(PageNumberPagination):
@@ -83,3 +83,43 @@ class UserListApi(ListAPIView, RetrieveUpdateAPIView, RetrieveDestroyAPIView):
         user = User.objects.get(id=pk)
         user.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class UserMeApi(RetrieveAPIView): 
+        serializer_class = UserSerializer
+        model = User
+        permission_classes = [IsAuthenticated]
+
+        def get_object(self, queryset=None):
+            obj = self.request.user
+            return obj
+        
+
+class UserChangePasswordApi(RetrieveUpdateAPIView):
+        serializer_class = ChangePasswordSerializer
+        model = User
+        permission_classes = [IsAuthenticated]
+
+        def get_object(self, queryset=None):
+            obj = self.request.user
+            return obj
+
+        def patch(self, request, *args, **kwargs):
+            self.object = self.get_object()
+            serializer = self.get_serializer(data=request.data)
+
+            if serializer.is_valid():
+                if not self.object.check_password(serializer.data.get("old_password")):
+                    return Response({"old_password": ["Wrong password."]}, status=status.HTTP_400_BAD_REQUEST)
+                self.object.set_password(serializer.data.get("new_password"))
+                self.object.save()
+                response = {
+                    'status': 'success',
+                    'code': status.HTTP_200_OK,
+                    'message': 'Password updated successfully',
+                    'data': []
+                }
+
+                return Response(response)
+
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
