@@ -5,6 +5,7 @@ import parcelModule from './modules/parcels'
 import shipmentModule from './modules/shipments'
 import staffModule from './modules/staff'
 import truckModule from './modules/trucks'
+import authModule from './modules/auth'
 
 export default createStore({
   modules: {
@@ -13,6 +14,7 @@ export default createStore({
     parcelModule,
     shipmentModule,
     staffModule,
-    truckModule
+    truckModule,
+    authModule
   }
 })

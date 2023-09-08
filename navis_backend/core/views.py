@@ -6,6 +6,7 @@ from rest_framework.generics import (
     RetrieveDestroyAPIView
 )
 from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
 
 from django.db.models import Q
 
@@ -39,6 +40,8 @@ from .serializers import (
 class ClientApi(
     CreateAPIView, ListAPIView, 
     RetrieveUpdateAPIView, RetrieveDestroyAPIView):
+
+    permission_classes = [IsAuthenticated]
 
     serializer_class = ClientSerializer
 
@@ -86,6 +89,8 @@ class TruckApi(
     CreateAPIView, ListAPIView, 
     RetrieveUpdateAPIView, RetrieveDestroyAPIView):
 
+    permission_classes = [IsAuthenticated]
+
     serializer_class = TruckSerializer
 
     class Pagination(PageNumberPagination):
@@ -131,6 +136,8 @@ class TruckApi(
 class DriverApi(
     CreateAPIView, ListAPIView, 
     RetrieveUpdateAPIView, RetrieveDestroyAPIView):
+
+    permission_classes = [IsAuthenticated]
 
     serializer_class = DriverSerializer
 
@@ -179,6 +186,8 @@ class ParcelApi(
     CreateAPIView, ListAPIView, 
     RetrieveUpdateAPIView, RetrieveDestroyAPIView):
 
+    permission_classes = [IsAuthenticated]
+
     serializer_class = ParcelSerializer
 
     class Pagination(PageNumberPagination):
@@ -225,6 +234,8 @@ class ShipmentApi(
     CreateAPIView, ListAPIView, 
     RetrieveUpdateAPIView, RetrieveDestroyAPIView):
 
+    permission_classes = [IsAuthenticated]
+
     serializer_class = ShipmentSerializer
 
     class Pagination(PageNumberPagination):
@@ -270,6 +281,8 @@ class ShipmentApi(
 
 class LocationApi(ListAPIView):
 
+    permission_classes = [IsAuthenticated]
+
     serializer_class = LocationSerializer
 
     class Pagination(PageNumberPagination):
@@ -291,6 +304,8 @@ class LocationApi(ListAPIView):
 
 
 class AnalyticsApi(APIView):
+
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
         new_parcels = Parcel.objects.filter(status="READY").count()
