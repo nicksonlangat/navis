@@ -2,7 +2,7 @@ import axios from 'axios'
 
 export default () => {
     const AuthApi = axios.create({
-        baseURL: 'http://localhost:8000/',
+        baseURL: process.env.VUE_APP_BASE_URL,
         withCredentials: false,
         headers: {
             Accept: 'application/json',

@@ -74,7 +74,8 @@
     </div>
     <hr class="mt-8">
     <div class="pl-4 mt-4 font-base flex justify-between mr-5">
-        <img src="../assets//user.jpeg" class="h-10 w-10 rounded-full object-cover" alt="">
+        <img v-if="baseURL+user?.profile_image" :src="user?.profile_image" class="h-10 w-10 rounded-full object-cover" alt="">
+        <img v-else src="../assets/avatar.svg" class="h-10 w-10 rounded-full object-cover" alt="">
         <div class="text-gray-500 font-base">
             <h1 class="text-gray-700">{{ user?.first_name }} {{ user?.last_name }}</h1>
             <p class="text-xs"> {{ user?.role }}</p>
@@ -98,6 +99,7 @@ export default {
     data() {
         return {
             currentRoute: null,
+            baseURL: process.env.VUE_APP_BASE_URL,
         }
     },
     computed: {
