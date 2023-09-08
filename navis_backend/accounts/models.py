@@ -17,6 +17,8 @@ class User(AbstractUser):
     phone_number = models.CharField(max_length=10, blank=True, null=True)
     kra_pin = models.CharField(max_length=20, blank=True, null=True)
     role = models.CharField(max_length=255, choices=Role.choices, default=Role.STAFF)
+    profile_image = models.ImageField(upload_to='users', blank=True, null=True)
+    
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []

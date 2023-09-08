@@ -123,3 +123,19 @@ class UserChangePasswordApi(RetrieveUpdateAPIView):
                 return Response(response)
 
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class UserChangeProfileApi(RetrieveUpdateAPIView):
+        model = User
+        permission_classes = [IsAuthenticated]
+
+        def get_object(self, queryset=None):
+            obj = self.request.user
+            return obj
+
+        def patch(self, request, *args, **kwargs):
+            self.object = self.get_object()
+            self.object.profile_image = request.FILES["profile_image"]
+            self.object.save()
+            response = {"message":'User profile image Updated'}
+            return Response(response)

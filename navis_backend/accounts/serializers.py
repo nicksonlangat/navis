@@ -9,7 +9,8 @@ class UserSerializer(serializers.ModelSerializer):
                  "id", "email", "first_name",
                  "last_name", "is_superuser",
                  "role", "id_number",
-                "phone_number", "kra_pin"
+                "phone_number", "kra_pin",
+                "profile_image"
                 ]
 
 class UserRegisterSerializer(serializers.ModelSerializer):

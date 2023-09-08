@@ -15,12 +15,18 @@
                 </div>
             </div>
             <Notification />
-            <div class="font-base bg-white pb-5 mt-2 rounded-md overflow-x-auto">
+            <div class="font-base bg-white pb-3 mt-2 rounded-md overflow-x-auto">
                 <div class="grid grid grid-cols-3 gap-4 gap-y-1">
                     <div class="ml-5 mt-3 flex flex-col gap-2">
                         <h3 class="uppercase text-gray-500">profile image</h3>
-                        <img src="../assets/user.jpeg" class="rounded-md h-64 w-64 object-cover" alt="">
-                        <a href="" class="text-violet-600">Change profile picture</a>
+                        <img v-if="baseURL+user?.profile_image" :src="user?.profile_image" class="rounded-md h-64 w-64 object-cover" alt="">
+                        <img v-else src="../assets/avatar.svg" class="rounded-md h-64 w-64 object-cover" alt="">
+                        <label for="dropzone-file" class=" w-full rounded-lg cursor-pointer">
+                            <p class="text-violet-600">Click to upload profile picture</p>
+                            <input name="imageArray" @change="onChange" id="dropzone-file" type="file" class="hidden" />
+                        </label>
+                        <button @click.prevent="updateProfileImage" class="bg-violet-600 text-white py-1 mr-24 text-sm rounded-md">Update profile image</button>
+
                     </div>
                     <div class="col-span-2 ml-5 mr-5 mt-5 flex flex-col gap-3">
                         <h3 class="uppercase text-gray-500">information</h3>
@@ -53,9 +59,9 @@
                         </ul>
                     </div>
 
-                    <div class="ml-5 mt-5 flex flex-col gap-3">
+                    <div class="ml-5 mt-3 flex flex-col gap-3">
                         <h3 class="uppercase text-gray-500">change password</h3>
-                        <form class="text-center text-gray-500 flex flex-col gap-4 font-base bg-white rounded-xl">
+                        <form class="text-center text-sm text-gray-500 flex flex-col gap-4 font-base bg-white rounded-xl">
                             <div class="flex text-start flex-col gap-2">
                                 <label for="password" class="text-gray-800 text-sm">Old Password</label>
                                 <input v-model="old_password" type="password" class="border focus:ring-0 focus:outline-none border-gray-200 bg-white py-2 rounded-md pl-4 shadow-sm">
@@ -75,9 +81,9 @@
 
                         </form>
                     </div>
-                    <div class=" col-span-2 ml-5 mr-5 mt-5 flex flex-col gap-3">
+                    <div class=" col-span-2 ml-5 mr-5 mt-3 flex flex-col gap-3">
                         <h3 class="uppercase text-gray-500">update information</h3>
-                        <form class="text-center text-gray-500 font-base grid grid-cols-2 gap-4 bg-white rounded-xl">
+                        <form class="text-center text-sm text-gray-500 font-base grid grid-cols-2 gap-4 bg-white rounded-xl">
                             <div class="flex text-start flex-col gap-2">
                                 <label for="first_name" class="text-gray-800 text-sm">First name</label>
                                 <input v-model="userInfo.first_name" type="text" class="border focus:ring-0 focus:outline-none border-gray-200 bg-white py-2 rounded-md pl-4 shadow-sm">
@@ -148,7 +154,9 @@ export default {
             },
             item: "Staff",
             passwordMistMatch: false,
-            errorMessage: ""
+            errorMessage: "",
+            imageArray: null,
+            baseURL: process.env.VUE_APP_BASE_URL,
         }
     },
     computed: {
@@ -162,9 +170,28 @@ export default {
     methods: {
         ...mapActions({
             changePassword: "changePassword",
+            changeProfileImage: "changeProfileImage",
             getUsersMe: "getUsersMe",
             updateStaff: "updateStaff"
         }),
+        onChange(event) {
+            this.imageArray = event.target.files[0]
+        },
+        updateProfileImage(e) {
+            e.preventDefault()
+            let data = new FormData()
+            data.append("profile_image", this.imageArray, this.imageArray.name)
+            this.changeProfileImage({
+                payload: data,
+                cb: (() => {
+                    this.init()
+                    this.emitter.emit("showNotification", {
+                        "action": "edit",
+                        "item": this.item
+                    })
+                })
+            })
+        },
         changeUserPassword() {
             if (this.new_password != this.confirm_password) {
                 this.passwordMistMatch = true
@@ -199,8 +226,10 @@ export default {
             })
         },
         logoutUser() {
-            localStorage.removeItem("navis_token")
-            this.$router.push({"name": "login"})
+            localStorage.removeItem("navis")
+            this.$router.push({
+                "name": "login"
+            })
         },
         init() {
             this.getUsersMe({

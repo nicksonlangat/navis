@@ -72,7 +72,18 @@ const actions = {
             .catch((error) => {
                 return Promise.reject(error)
             })
-      }
+      },
+      async changeProfileImage ({ commit }, { payload, cb }) {
+        return await Api('multipart/formdata')
+            .patch('/accounts/users/profile', payload)
+            .then((response) => {
+                if (cb) {
+                    cb(response.data)
+                }
+            })
+            .catch((error) => console.log(error))
+          
+          },
 }
 
 const getters = {
