@@ -1,4 +1,6 @@
-<img width="1428" alt="Screenshot 2023-09-10 at 10 01 24" src="https://github.com/nicksonlangat/navis/assets/48315521/1dc5a49f-325a-42bb-9e67-ac28f381441c"># Project Description: Navis
+<img width="1428" alt="dash" src="https://github.com/nicksonlangat/navis/assets/48315521/ae059926-94ed-4c75-81ff-5f2ceed66598">
+
+# Project Description: Navis
 
 Navis is a company that provides logistics, shipping, warehousing and fulfilment services. This platform aims to give staff, managers and admins a positive and high experience when using the dashboard. 
 
@@ -156,10 +158,18 @@ The accounts page allows staff to view and update any personal information. It a
 <p align="start">
   <img src="screens/account.png" >
 </p>
+
 # Notifications:
 Notifications are crucial in letting the users know what is the result of their actions. Notifications are platform wide and dispatched every time a new client, truck, driver, parcel, shipment is created, edited or deleted. Below is the notifications module in action:
+<img width="652" alt="Screenshot 2023-09-07 at 10 17 08" src="https://github.com/nicksonlangat/navis/assets/48315521/f883766b-263b-4933-82cb-8b5ffc4f3bd0">
 
- 
+<img width="476" alt="Screenshot 2023-09-07 at 10 15 01" src="https://github.com/nicksonlangat/navis/assets/48315521/67d0f265-5fed-4a31-b858-59436e5c5b37">
+
+<img width="476" alt="Screenshot 2023-09-07 at 10 15 24" src="https://github.com/nicksonlangat/navis/assets/48315521/039231c4-4640-42f7-af2c-d792e77ed37a">
+
+
+ <img width="475" alt="Screenshot 2023-09-07 at 10 17 24" src="https://github.com/nicksonlangat/navis/assets/48315521/c76a5b98-13bc-434b-b465-959b9375f1ec">
+
 
 # Mobile responsiveness
 The platform is mobile friendly and responsive and here are some of the screens viewed from a mobile device:
