@@ -73,6 +73,7 @@ class DriverSerializer(serializers.ModelSerializer):
 
 
 class ShipmentSerializer(serializers.ModelSerializer):
+        loaded_kg = serializers.SerializerMethodField(read_only=True)
         class Meta:
             model = Shipment
             fields = [
@@ -80,8 +81,13 @@ class ShipmentSerializer(serializers.ModelSerializer):
                 "parcels", "shipment_number", 
                 "status", "route_from", "created_at",
                 "updated_at", "route_to", "departure_date",
-                "arrival_date", "parcels"
+                "arrival_date", "parcels", "loaded_kg"
                 ]
+            
+        def get_loaded_kg(self, obj):
+             truck_weight = obj.truck.carry_weight
+             total_parcel_weight = sum(parcel.weight for parcel in obj.parcels.all())
+             return total_parcel_weight
         
         def to_representation(self, instance):
             data = super(ShipmentSerializer, self).to_representation(instance)

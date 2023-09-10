@@ -234,7 +234,7 @@ class ShipmentApi(
     CreateAPIView, ListAPIView, 
     RetrieveUpdateAPIView, RetrieveDestroyAPIView):
 
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
 
     serializer_class = ShipmentSerializer
 
