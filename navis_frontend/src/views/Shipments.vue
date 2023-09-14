@@ -27,8 +27,8 @@
                 </div>
 
             </div>
-
-            <div class="lg:hidden mt-10 flex flex-col gap-4">
+            <Navbar/>
+            <div class="lg:hidden mt-5 flex flex-col gap-4">
                 <h1 class="text-2xl font-extrabold">Shipments</h1>
                 <div class="relative">
                     <input v-model="text" class="pl-8 w-[365px] bg-white py-2.5 rounded-md focus:outline-none font-base text-sm placeholder:text-xs" type="text" placeholder="Search shipments by shipment number">
@@ -224,13 +224,15 @@ import {
     mapMutations
 } from 'vuex';
 import NewShipmentDrawer from '@/components/NewShipmentDrawer.vue';
+import Navbar from '@/components/Navbar.vue'
 export default {
     name: 'Shipments',
     components: {
         Aside,
         DeleteModal,
         Notification,
-        NewShipmentDrawer
+        NewShipmentDrawer,
+        Navbar
     },
     data() {
         return {

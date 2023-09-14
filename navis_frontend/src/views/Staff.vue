@@ -3,8 +3,8 @@
     <Aside class="hidden lg:block" />
     <div class="lg:w-10/12 w-full">
         <div class="pl-6 pr-6 font-base">
-            <div class="flex font-base mt-5 justify-between">
-                <div class="hidden lg:flex gap-4 items-center">
+            <div class="hidden lg:flex font-base mt-5 justify-between">
+                <div class="flex gap-4 items-center">
                     <h1 class="text-2xl font-extrabold">Staff</h1>
                     <div class="relative ml-5">
                         <input v-model="text" class="pl-8 w-72 bg-white py-2 rounded-md focus:outline-none font-base text-sm placeholder:text-xs" type="text" placeholder="Search staff by identity number">
@@ -14,15 +14,16 @@
                     </div>
                 </div>
                 <div class="hidden lg:flex gap-4 items-center">
-                    <div>
+                    
                         <NewStaffDrawer />
                         <EditStaffModal />
                         <DeleteModal />
                         <Notification />
-                    </div>
+                    
                 </div>
             </div>
-            <div class="lg:hidden  flex flex-col gap-4">
+            <Navbar/>
+            <div class="lg:hidden mt-5 flex flex-col gap-4">
                 <h1 class="text-2xl font-extrabold">Staff</h1>
                 <div class="relative">
                     <input v-model="text" class="pl-8 w-[365px] bg-white py-2.5 rounded-md focus:outline-none font-base text-sm placeholder:text-xs" type="text" placeholder="Search staff by identity number">
@@ -157,6 +158,7 @@ import {
 } from 'vuex';
 import moment from "moment"
 import Notification from '@/components/Notification.vue';
+import Navbar from '@/components/Navbar.vue'
 export default {
     name: 'Staff',
     components: {
@@ -165,7 +167,8 @@ export default {
         EditStaffModal,
         EmptyIllustration,
         DeleteModal,
-        Notification
+        Notification,
+        Navbar
     },
     data() {
         return {

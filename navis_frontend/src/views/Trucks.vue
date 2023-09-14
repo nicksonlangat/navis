@@ -22,7 +22,8 @@
                     </div>
                 </div>
             </div>
-            <div class="lg:hidden mt-10 flex flex-col gap-4">
+            <Navbar/>
+            <div class="lg:hidden mt-5 flex flex-col gap-4">
                 <h1 class="text-2xl font-extrabold">Trucks</h1>
                 <div class="relative">
                     <input v-model="text" class="pl-8 w-[365px] bg-white py-2.5 rounded-md focus:outline-none font-base text-sm placeholder:text-xs" type="text" placeholder="Search trucks by chassis or reg no">
@@ -158,7 +159,7 @@ import NewTruckDrawer from '@/components/NewTruckDrawer.vue';
 import EditTruckModal from '@/components/EditTruckModal.vue';
 import EmptyIllustration from '@/components/EmptyIllustration.vue';
 import DeleteModal from '@/components/DeleteModal.vue';
-
+import Navbar from '@/components/Navbar.vue'
 import {
     mapActions,
     mapGetters,
@@ -174,7 +175,8 @@ export default {
         EditTruckModal,
         EmptyIllustration,
         DeleteModal,
-        Notification
+        Notification,
+        Navbar
     },
     data() {
         return {

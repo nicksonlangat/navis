@@ -15,6 +15,7 @@
                     <NewShipmentDrawer />
                 </div>
             </div>
+            <Navbar/>
             <div class="lg:hidden relative mt-5">
                 <input v-model="text" class="pl-8 w-full bg-white py-2.5 rounded-md focus:outline-none font-base text-sm placeholder:text-xs" type="text" placeholder="Search shipments by shipment number">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 text-gray-400 absolute top-2.5 left-2 h-5">
@@ -324,7 +325,7 @@
 import Aside from '@/components/Aside.vue';
 import NewShipmentDrawer from '@/components/NewShipmentDrawer.vue';
 import moment from 'moment';
-
+import Navbar from '@/components/Navbar.vue'
 import {
     mapActions,
     mapGetters
@@ -333,7 +334,8 @@ export default {
     name: 'Dashboard',
     components: {
         Aside,
-        NewShipmentDrawer
+        NewShipmentDrawer,
+        Navbar
     },
     data() {
         return {

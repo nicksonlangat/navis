@@ -22,8 +22,8 @@
                     </div>
                 </div>
             </div>
-
-            <div class="lg:hidden mt-10 flex flex-col gap-4">
+            <Navbar/>
+            <div class="lg:hidden mt-5 flex flex-col gap-4">
                 <h1 class="text-2xl font-extrabold">Clients</h1>
                 <div class="relative">
                     <input v-model="text" class="pl-8 w-[365px] bg-white py-2.5 rounded-md focus:outline-none font-base text-sm placeholder:text-xs" type="text" placeholder="Search clients by name or identity number">
@@ -162,7 +162,7 @@ import {
 } from 'vuex';
 import moment from "moment"
 import Notification from '@/components/Notification.vue';
-
+import Navbar from '@/components/Navbar.vue'
 export default {
     name: 'Clients',
     components: {
@@ -171,7 +171,8 @@ export default {
         EditClientModal,
         EmptyIllustration,
         DeleteModal,
-        Notification
+        Notification,
+        Navbar
     },
     data() {
         return {
