@@ -1,10 +1,10 @@
 <template>
 <div class="flex">
-    <Aside />
-    <div class="w-10/12">
+    <Aside class="hidden lg:block" />
+    <div class="lg:w-10/12 w-full">
         <div class="pl-6 pr-6 font-base">
             <div class="flex font-base mt-5 justify-between">
-                <div class="flex gap-4 items-center">
+                <div class="hidden lg:flex gap-4 items-center">
                     <h1 class="text-2xl font-extrabold">Staff</h1>
                     <div class="relative ml-5">
                         <input v-model="text" class="pl-8 w-72 bg-white py-2 rounded-md focus:outline-none font-base text-sm placeholder:text-xs" type="text" placeholder="Search staff by identity number">
@@ -13,7 +13,7 @@
                         </svg>
                     </div>
                 </div>
-                <div class="flex gap-4 items-center">
+                <div class="hidden lg:flex gap-4 items-center">
                     <div>
                         <NewStaffDrawer />
                         <EditStaffModal />
@@ -22,7 +22,46 @@
                     </div>
                 </div>
             </div>
-            <div class="font-base mt-5 rounded-md overflow-x-auto">
+            <div class="lg:hidden  flex flex-col gap-4">
+                <h1 class="text-2xl font-extrabold">Staff</h1>
+                <div class="relative">
+                    <input v-model="text" class="pl-8 w-[365px] bg-white py-2.5 rounded-md focus:outline-none font-base text-sm placeholder:text-xs" type="text" placeholder="Search staff by identity number">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 text-gray-400 absolute top-2.5 left-2 h-5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                    </svg>
+                </div>
+
+            </div>
+            <div class="lg:hidden bg-white pb-2 font-base mt-5 rounded-md">
+
+                <div v-for="user in staff" class="border-b first:py-2 pb-2 last:border-0 last:pb-0">
+                    <div class="flex justify-between ml-3 mr-5 text-xs mt-5">
+                        <h3 class="uppercase text-gray-500">name <br>
+                            <span class="text-gray-900"> {{ user.first_name }} {{ user.last_name }}</span></h3>
+                        <h3 class="uppercase text-gray-500">phone <br>
+                            <span class="text-gray-900"> {{ user.phone_number }}</span></h3>
+                    </div>
+                    <div class="flex justify-between ml-3 mr-5 text-xs mt-5">
+                        <h3 class="uppercase text-gray-500">email <br>
+                            <span class="text-gray-900"> {{ user.email }}</span></h3>
+                        <h3 class="uppercase text-gray-500">role <br>
+                            <span class="text-gray-900"> {{ user.role }}</span></h3>
+                    </div>
+                </div>
+                <ul v-if="staff.length" class="mt-2 text-sm font-base inline-flex -space-x-px items-center divide-x">
+                    <li @click="goToLastPage" :class="previousPage === '' || previousPage == null ? 'text-gray-300' : 'text-gray-600'" class="flex cursor-pointer items-center justify-center px-4 h-5 ml-0 leading-tight bg-white rounded-l-md">
+                        Previous
+                    </li>
+                    <li v-for="i in totalPages" :class="currentPage == i ? 'text-violet-600' : 'text-gray-600'" class="flex items-center justify-center px-4 h-5 leading-tight bg-white">
+                        {{ i }}
+                    </li>
+
+                    <li @click="goToNextPage" :class="nextPage === '' || nextPage == null ? 'text-gray-300' : 'text-gray-600'" class="flex cursor-pointer items-center justify-center px-4 h-5 ml-0 leading-tight bg-white rounded-r-md">
+                        Next
+                    </li>
+                </ul>
+            </div>
+            <div class="hidden lg:block font-base mt-5 rounded-md overflow-x-auto">
                 <table v-if="staff.length" class="w-full text-sm text-left text-gray-500">
                     <thead class="text-xs text-gray-950 uppercase bg-white border-b font-base">
                         <tr>

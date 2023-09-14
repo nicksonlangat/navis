@@ -1,7 +1,7 @@
 <template>
 <div class="flex">
-    <Aside />
-    <div class="w-10/12">
+    <Aside class="hidden lg:block" />
+    <div class="lg:w-10/12 w-full">
         <div class="pl-6 pr-6 font-base">
             <div class="flex font-base mt-5 justify-between">
                 <div class="flex gap-4 items-center">
@@ -16,8 +16,8 @@
             </div>
             <Notification />
             <div class="font-base bg-white pb-3 mt-2 rounded-md overflow-x-auto">
-                <div class="grid grid grid-cols-3 gap-4 gap-y-1">
-                    <div class="ml-5 mt-3 flex flex-col gap-2">
+                <div class="grid lg:grid-cols-3 gap-4 gap-y-1">
+                    <div class="ml-5 mt-3 w-full flex flex-col gap-2">
                         <h3 class="uppercase text-gray-500">profile image</h3>
                         <img v-if="baseURL+user?.profile_image" :src="user?.profile_image" class="rounded-md h-64 w-64 object-cover" alt="">
                         <img v-else src="../assets/avatar.svg" class="rounded-md h-64 w-64 object-cover" alt="">
@@ -59,7 +59,7 @@
                         </ul>
                     </div>
 
-                    <div class="ml-5 mt-3 flex flex-col gap-3">
+                    <div class="ml-5 mt-3 w-full flex flex-col gap-3">
                         <h3 class="uppercase text-gray-500">change password</h3>
                         <form class="text-center text-sm text-gray-500 flex flex-col gap-4 font-base bg-white rounded-xl">
                             <div class="flex text-start flex-col gap-2">
@@ -111,8 +111,11 @@
                             <div>
 
                             </div>
-                            <div class="mt-5 ">
+                            <div class="mt-5 hidden lg:block">
                                 <button @click.prevent="updateStaffDetails" class="bg-violet-600 w-full text-white py-2 px-12 rounded-md">Update information</button>
+                            </div>
+                            <div class="mt-5 lg:hidden">
+                                <button @click.prevent="updateStaffDetails" class="bg-violet-600 w-full text-white py-2 px-12 rounded-md">Update</button>
                             </div>
 
                         </form>
