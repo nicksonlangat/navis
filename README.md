@@ -2,6 +2,8 @@
 
 # Project Description: Navis
 
+[Live demo link](https://navis.techwithnick.com/)
+
 Navis is a company that provides logistics, shipping, warehousing and fulfilment services. This platform aims to give staff, managers and admins a positive and high experience when using the dashboard. 
 
 # HOW IT WORKS:
