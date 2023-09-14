@@ -16,7 +16,7 @@ class Command(BaseCommand):
         "Homa Bay", "Migori", "Kisii", "Nyamira"
         ]
     
-    client_data = []
+    
 
     truck_data = [
     {
@@ -381,11 +381,11 @@ class Command(BaseCommand):
 
 
     def handle(self, *args, **options):
-        # for county in self.counties_kenya:
-        #     try:
-        #         Location.objects.create(name=county)
-        #     except Exception as e:
-        #         raise CommandError(f"{e} error encountered")
+        for county in self.counties_kenya:
+            try:
+                Location.objects.create(name=county)
+            except Exception as e:
+                raise CommandError(f"{e} error encountered")
         
         # for driver in self.driver_data:
         #     Driver.objects.create(
@@ -410,14 +410,14 @@ class Command(BaseCommand):
         #         yom = truck["yom"]
         #     )
 
-        for client in self.client_data:
-            Client.objects.create(
-                first_name = client["first_name"],
-               last_name = client["last_name"],
-                email = client["email"],
-                phone_number = client["phone_number"],
-               identity_number = client["identity_number"]
-            )
+        # for client in self.client_data:
+        #     Client.objects.create(
+        #         first_name = client["first_name"],
+        #        last_name = client["last_name"],
+        #         email = client["email"],
+        #         phone_number = client["phone_number"],
+        #        identity_number = client["identity_number"]
+        #     )
             
         self.stdout.write(
             self.style.SUCCESS("Successfully loaded data")
