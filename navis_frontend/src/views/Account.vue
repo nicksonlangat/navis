@@ -2,11 +2,12 @@
 <div class="flex">
     <Aside class="hidden lg:block" />
     <div class="lg:w-10/12 w-full">
+
         <div class="pl-6 pr-6 font-base">
+            <Navbar/>
             <div class="flex font-base mt-5 justify-between">
                 <div class="flex gap-4 items-center">
                     <h1 class="text-2xl font-extrabold">Account</h1>
-
                 </div>
                 <div class="flex gap-4 items-center">
                     <div>
@@ -117,7 +118,6 @@
                             <div class="mt-5 lg:hidden">
                                 <button @click.prevent="updateStaffDetails" class="bg-violet-600 w-full text-white py-2 px-12 rounded-md">Update</button>
                             </div>
-
                         </form>
                     </div>
 
@@ -136,11 +136,13 @@ import {
     mapGetters
 } from 'vuex';
 import Notification from '@/components/Notification.vue';
+import Navbar from '@/components/Navbar.vue'
 export default {
     name: 'Account',
     components: {
         Aside,
-        Notification
+        Notification,
+        Navbar
     },
     data() {
         return {
