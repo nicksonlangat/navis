@@ -227,6 +227,7 @@ export default {
         },
         logoutUser() {
             localStorage.removeItem("navis")
+            localStorage.removeItem("hasPermission")
             this.$router.push({
                 "name": "login"
             })

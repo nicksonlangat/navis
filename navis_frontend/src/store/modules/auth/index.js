@@ -15,7 +15,7 @@ const mutations = {
 }
 
 const actions = {
-    async loginUser({ commit }, { payload, cb }) {
+    async loginUser({ commit }, { payload, cb, errorCb }) {
         return await AuthApi()
             .post('accounts/login/', payload)
             .then((response) => {
@@ -27,7 +27,9 @@ const actions = {
                 return response.data
             })
             .catch((error) => {
-                return Promise.reject(error)
+                if(errorCb) {
+                    errorCb(error)
+                }
             })
       },
       

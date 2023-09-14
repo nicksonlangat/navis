@@ -48,7 +48,7 @@
             </svg>
 
             Trucks</li>
-       
+
     </ul>
     <hr class="mt-5">
     <ul class="pl-3 mt-5 flex text-sm flex-col gap-3 mr-5 text-gray-500 font-base">
@@ -80,8 +80,8 @@
             <h1 class="text-gray-700">{{ user?.first_name }} {{ user?.last_name }}</h1>
             <p class="text-xs"> {{ user?.role }}</p>
         </div>
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mt-1 cursor-pointer">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
+        <svg  @click="logoutUser" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 cursor-pointer h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
         </svg>
 
     </div>
@@ -90,7 +90,10 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import {
+    mapActions,
+    mapGetters
+} from 'vuex'
 import NewShipmentDrawer from './NewShipmentDrawer.vue'
 export default {
     components: {
@@ -122,13 +125,16 @@ export default {
         init() {
             this.getUsersMe({
                 cb: () => {
-                    
+
                 }
             })
         },
         logoutUser() {
             localStorage.removeItem("navis")
-            this.$router.push({"name": "login"})
+            localStorage.removeItem("hasPermission")
+            this.$router.push({
+                "name": "login"
+            })
         },
     },
     mounted() {
