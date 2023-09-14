@@ -1,12 +1,11 @@
 <template>
 <div class="flex">
-    <Aside />
-    <div class="w-10/12">
+    <Aside class="hidden lg:block" />
+    <div class="lg:w-10/12 w-full">
         <div class="pl-6 pr-6 font-base">
-            <Search />
             <DeleteModal />
             <Notification />
-            <div class="flex font-base mt-5 justify-between">
+            <div class="hidden lg:flex font-base mt-5 justify-between">
                 <div class="flex gap-4 items-center">
                     <h1 class="text-2xl font-extrabold">Shipments</h1>
                     <div class="relative ml-5 ">
@@ -29,7 +28,56 @@
 
             </div>
 
-            <div v-if="currentShimentFilter === 'arrival'" class="font-base mt-5 rounded-md overflow-x-auto">
+            <div class="lg:hidden mt-10 flex flex-col gap-4">
+                <h1 class="text-2xl font-extrabold">Shipments</h1>
+                <div class="relative">
+                    <input v-model="text" class="pl-8 w-[365px] bg-white py-2.5 rounded-md focus:outline-none font-base text-sm placeholder:text-xs" type="text" placeholder="Search shipments by shipment number">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 text-gray-400 absolute top-2.5 left-2 h-5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                    </svg>
+                </div>
+
+            </div>
+            <div v-if="currentShimentFilter === 'arrival'" class="lg:hidden bg-white pb-2 font-base mt-5 rounded-md overflow-x-auto">
+
+                <div v-for="shipment in shipments" class="lg:hidden border-b first:py-2 pb-2 last:border-0 last:pb-0">
+                    <div class="flex justify-between ml-3 mr-5 text-xs mt-5">
+                        <h3 class="uppercase text-gray-500">route <br>
+                            <span class="text-gray-900"> {{ shipment.route_from.name }} - {{ shipment.route_to.name }}</span></h3>
+                        <h3 class="uppercase text-gray-500">shipment number <br>
+                            <span class="text-gray-900"> {{ shipment.shipment_number }}</span></h3>
+                        <h3 class="uppercase text-gray-500">truck <br>
+                            <span class="text-gray-900"> {{ shipment.truck.registration_number }}</span></h3>
+                    </div>
+                    <div class="flex justify-between ml-3 mr-5 text-xs mt-5">
+                        <h3 class="uppercase text-gray-500">departure <br>
+                            <span class="text-gray-900"> {{ formatDate(shipment.departure_date) }}</span></h3>
+                        <h3 class="uppercase text-gray-500">arrival <br>
+                            <span class="text-gray-900"> {{ formatDate(shipment.arrival_date) }}</span></h3>
+                            <h3 class="uppercase text-gray-500">status <br>
+                                <span v-if="shipment.status === 'READY'" class="bg-violet-200 text-violet-700 px-2 text-xs py-0.5 rounded">{{ shipment.status }}</span>
+                                <span v-if="shipment.status === 'DELAYED'" class="bg-pink-200 text-pink-700 px-2 text-xs py-0.5 rounded">{{ shipment.status }}</span>
+                                <span v-if="shipment.status === 'ON WAY'" class="bg-amber-200 text-amber-700 px-2 text-xs py-0.5 rounded">{{ shipment.status }}</span>
+                                <span v-if="shipment.status === 'ARRIVED'" class="bg-emerald-200 text-emerald-700 px-2 text-xs py-0.5 rounded">{{ shipment.status }}</span>
+                         
+                            </h3>
+                    </div>
+                </div>
+                <ul v-if="shipments.length" class="mt-2 text-sm font-base inline-flex -space-x-px items-center divide-x">
+                    <li @click="goToLastPage" :class="previousPage === '' || previousPage == null ? 'text-gray-300' : 'text-gray-600'" class="flex cursor-pointer items-center justify-center px-4 h-5 ml-0 leading-tight bg-white rounded-l-md">
+                        Previous
+                    </li>
+                    <li v-for="i in totalPages" :class="currentPage == i ? 'text-violet-600' : 'text-gray-600'" class="flex items-center justify-center px-4 h-5 leading-tight bg-white">
+                        {{ i }}
+                    </li>
+
+                    <li @click="goToNextPage" :class="nextPage === '' || nextPage == null ? 'text-gray-300' : 'text-gray-600'" class="flex cursor-pointer items-center justify-center px-4 h-5 ml-0 leading-tight bg-white rounded-r-md">
+                        Next
+                    </li>
+                </ul>
+            </div>
+
+            <div v-if="currentShimentFilter === 'arrival'" class="hidden lg:block font-base mt-5 rounded-md overflow-x-auto">
                 <table class="w-full text-sm text-left text-gray-500">
                     <thead class="text-xs text-gray-950 uppercase bg-white border-b font-base">
                         <tr>

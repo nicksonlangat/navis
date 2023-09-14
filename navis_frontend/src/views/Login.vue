@@ -1,6 +1,6 @@
 <template>
-<div class="flex w-full font-base flex-col justify-center items-center">
-    <form class="mt-32 text-center font-base bg-white pb-20 w-1/2 max-w-lg rounded-xl">
+<div class="flex w-full font-base flex-col lg:justify-center lg:items-center">
+    <form class="lg:mt-32 mt-6 text-center font-base bg-white lg:pb-20 pb-10 mx-2 lg:mx-0 lg:w-1/2 max-w-lg rounded-xl">
         <div class="flex items-center justify-center">
             <img src="../assets//logo.png" class="h-32 w-32 rounded-full object-cover" alt="">
         </div>
@@ -19,7 +19,7 @@
                 <a href="/reset">Forgot password?</a>
             </div>
         </div>
-        <div class="mr-5 ml-5 mt-5 flex gap-5">
+        <div class="mr-5 ml-5 mt-5 flex lg:flex-row flex-col gap-5">
             <button @click.prevent="submitLoginRequest" class="bg-violet-600 w-full text-white py-2 px-12 rounded-md">Log in</button>
             <button @click.prevent="submitGuestLoginRequest" class="bg-violet-600 w-full text-white py-2 px-12 rounded-md">Guest log in</button>
         </div>

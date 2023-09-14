@@ -1,11 +1,11 @@
 <template>
 <div class="flex">
-    <Aside />
-    <div class="w-10/12">
+    <Aside class="hidden lg:block" />
+    <div class="lg:w-10/12 w-full pb-10 lg:pb-0">
         <div class="pl-6 pr-6 font-base">
-            <div class="flex justify-between items-center">
+            <div class="hidden lg:flex mx-5 flex-col lg:flex-row justify-between items-center">
                 <h1 class="text-2xl mt-5 font-extrabold">Overview</h1>
-                <div class="relative ml-5 mt-5">
+                <div class="relative mx-10 lg:ml-5 mt-5">
                     <input v-model="text" class="pl-8 w-96 bg-white py-2.5 rounded-md focus:outline-none font-base text-sm placeholder:text-xs" type="text" placeholder="Search shipments by shipment number">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 text-gray-400 absolute top-2.5 left-2 h-5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
@@ -15,7 +15,14 @@
                     <NewShipmentDrawer />
                 </div>
             </div>
-            <div class="grid grid-cols-4 mt-5 gap-5">
+            <div class="lg:hidden relative mt-5">
+                <input v-model="text" class="pl-8 w-full bg-white py-2.5 rounded-md focus:outline-none font-base text-sm placeholder:text-xs" type="text" placeholder="Search shipments by shipment number">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 text-gray-400 absolute top-2.5 left-2 h-5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                </svg>
+            </div>
+            <div class="grid lg:grid-cols-4 grid-cols-2 mt-5 gap-5">
+
                 <div class="bg-white flex justify-between items-center h-24 rounded-md">
                     <div class="ml-5">
                         <p class="text-gray-400 text-sm">New parcels</p>
@@ -30,7 +37,8 @@
 
                 <div class="bg-white flex justify-between items-center h-24 rounded-md">
                     <div class="ml-5">
-                        <p class="text-gray-400 text-sm">Ready for shipping </p>
+                        <p class="text-gray-400 hidden lg:block text-sm">Ready for shipping </p>
+                        <p class="text-gray-400 lg:hidden text-sm">Ready </p>
                         <h3 class="text-2xl mt-1">{{ new_parcels }}</h3>
                     </div>
                     <div class="mr-5">
@@ -62,7 +70,103 @@
                     </div>
                 </div>
             </div>
-            <div class="grid mt-8 font-base grid-cols-2 gap-y-4 gap-4">
+            <div class="lg:hidden">
+                <div class="bg-white rounded-md pb-5">
+                    <div class="flex justify-between items-center mr-3 ml-3 mt-5">
+                        <h3 class="text-xl font-base mt-4 font-bold">Active shipments</h3>
+                        <a href="/shipments" class="text-xs mt-4 flex gap-1 text-violet-600">Show all <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                            </svg>
+                        </a>
+                    </div>
+                    <div v-for="shipment in shipments.slice(-4)" class="border-b first:py-2 pb-2 last:border-0 last:pb-0">
+                        <div class="flex justify-between ml-3 mr-5 text-xs mt-5">
+                            <h3 class="uppercase text-gray-500">shipment number <br>
+                                <span class="text-gray-900"> {{ shipment.shipment_number }}</span></h3>
+                            <h3 class="uppercase text-gray-500">truck <br>
+                                <span class="text-gray-900"> {{ shipment.truck.registration_number }}</span></h3>
+                        </div>
+                        <div class="flex justify-between ml-3 mr-5 text-xs mt-5">
+                            <h3 class="uppercase text-gray-500">destination <br>
+                                <span class="text-gray-900"> {{ shipment.route_to.name }}</span></h3>
+                            <h3 class="uppercase text-gray-500">arrival <br>
+                                <span class="text-gray-900"> {{ formatDate(shipment.arrival_date) }}</span></h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-md pb-5">
+                    <div class="flex justify-between items-center mr-3 ml-3 mt-5">
+                        <h3 class="text-xl font-base mt-4 font-bold">Latest clients</h3>
+                        <a href="/clients" class="text-xs mt-4 flex gap-1 text-violet-600">Show all <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                            </svg>
+                        </a>
+                    </div>
+                    <div v-for="client in clients.slice(-4)" class="border-b first:py-2 pb-2 last:border-0 last:pb-0">
+                        <div class="flex justify-between ml-3 mr-5 text-xs mt-5">
+                            <h3 class="uppercase text-gray-500">name <br>
+                                <span class="text-gray-900"> {{ client.first_name }} {{ client.last_name }}</span></h3>
+                            <h3 class="uppercase text-gray-500">phone <br>
+                                <span class="text-gray-900"> {{ client.phone_number }}</span></h3>
+                        </div>
+                        <div class="flex justify-between ml-3 mr-5 text-xs mt-5">
+                            <h3 class="uppercase text-gray-500">email <br>
+                                <span class="text-gray-900"> {{ client.email }}</span></h3>
+                            <h3 class="uppercase text-gray-500">location <br>
+                                <span class="text-gray-900"> {{ client.location.name }}</span></h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-md pb-5">
+                    <div class="flex justify-between items-center mr-3 ml-3 mt-5">
+                        <h3 class="text-xl font-base mt-4 font-bold">Available trucks</h3>
+                        <a href="/trucks" class="text-xs mt-4 flex gap-1 text-violet-600">Show all <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                            </svg>
+                        </a>
+                    </div>
+                    <div v-for="truck in trucks.slice(-4)" class="border-b first:py-2 pb-2 last:border-0 last:pb-0">
+                        <div class="flex justify-between ml-3 mr-5 text-xs mt-5">
+                            <h3 class="uppercase text-gray-500">registration <br>
+                                <span class="text-gray-900"> {{ truck.registration_number }}</span></h3>
+                            <h3 class="uppercase text-gray-500">name <br>
+                                <span class="text-gray-900"> {{ truck.manufacturer }}</span></h3>
+                        </div>
+                        <div class="flex justify-between ml-3 mr-5 text-xs mt-5">
+                            <h3 class="uppercase text-gray-500">model <br>
+                                <span class="text-gray-900"> {{ truck.model }}</span></h3>
+                            <h3 class="uppercase text-gray-500">weight <br>
+                                <span class="text-gray-900"> {{ truck.carry_weight }}</span></h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-md pb-5">
+                    <div class="flex justify-between items-center mr-3 ml-3 mt-5">
+                        <h3 class="text-xl font-base mt-4 font-bold">Recent parcels</h3>
+                        <a href="/parcels" class="text-xs mt-4 flex gap-1 text-violet-600">Show all <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                            </svg>
+                        </a>
+                    </div>
+                    <div v-for="parcel in recent_parcels.slice(-4)" class="border-b first:py-2 pb-2 last:border-0 last:pb-0">
+                        <div class="flex justify-between ml-3 mr-5 text-xs mt-5">
+                            <h3 class="uppercase text-gray-500">parcel number <br>
+                                <span class="text-gray-900"> {{ parcel.parcel_number }}</span></h3>
+                            <h3 class="uppercase text-gray-500">destination <br>
+                                <span class="text-gray-900"> {{ parcel.destination.name }}</span></h3>
+                        </div>
+                        <div class="flex justify-between ml-3 mr-5 text-xs mt-5">
+                            <h3 class="uppercase text-gray-500">client <br>
+                                <span class="text-gray-900"> {{ parcel.client.first_name }}</span></h3>
+                            <h3 class="uppercase text-gray-500">item <br>
+                                <span class="text-gray-900"> {{ parcel.item }}</span></h3>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="hidden lg:grid mt-8 font-base lg:grid-cols-2 gap-y-4 gap-4">
                 <div class="bg-white rounded-md h-72">
                     <div class="flex justify-between items-center mr-3 ml-3 mt-2">
                         <h3 class="text-xl font-base font-bold">Active shipments</h3>
