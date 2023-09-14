@@ -1,9 +1,9 @@
 <template>
 <div class="flex">
-    <Aside />
-    <div class="w-10/12">
+    <Aside class="hidden lg:block" />
+    <div class="lg:w-10/12 w-full">
         <div class="pl-6 pr-6 font-base">
-            <div class="flex font-base mt-5 justify-between">
+            <div class="hidden lg:flex font-base mt-5 justify-between">
                 <div class="flex gap-4 items-center">
                     <h1 class="text-2xl font-extrabold">Trucks</h1>
                     <div class="relative ml-5">
@@ -17,12 +17,50 @@
                     <div>
                         <NewTruckDrawer />
                         <EditTruckModal />
-                        <DeleteModal/>
-                        <Notification/>
+                        <DeleteModal />
+                        <Notification />
                     </div>
                 </div>
             </div>
-            <div class="font-base mt-5 rounded-md overflow-x-auto">
+            <div class="lg:hidden mt-10 flex flex-col gap-4">
+                <h1 class="text-2xl font-extrabold">Trucks</h1>
+                <div class="relative">
+                    <input v-model="text" class="pl-8 w-[365px] bg-white py-2.5 rounded-md focus:outline-none font-base text-sm placeholder:text-xs" type="text" placeholder="Search trucks by chassis or reg no">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 text-gray-400 absolute top-2.5 left-2 h-5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                    </svg>
+                </div>
+
+            </div>
+            <div class="bg-white mt-5 pb-3 lg:hidden rounded-md">
+                <div v-for="truck in trucks" class="border-b first:py-2 pb-2 last:border-0 last:pb-0">
+                    <div class="flex justify-between ml-3 mr-5 text-xs mt-5">
+                        <h3 class="uppercase text-gray-500">registration <br>
+                            <span class="text-gray-900"> {{ truck.registration_number }}</span></h3>
+                        <h3 class="uppercase text-gray-500">name <br>
+                            <span class="text-gray-900"> {{ truck.manufacturer }}</span></h3>
+                    </div>
+                    <div class="flex justify-between ml-3 mr-5 text-xs mt-5">
+                        <h3 class="uppercase text-gray-500">model <br>
+                            <span class="text-gray-900"> {{ truck.model }}</span></h3>
+                        <h3 class="uppercase text-gray-500">weight <br>
+                            <span class="text-gray-900"> {{ truck.carry_weight }}</span></h3>
+                    </div>
+                </div>
+                <ul v-if="trucks.length" class="mt-2 text-sm font-base inline-flex -space-x-px items-center divide-x">
+                    <li @click="goToLastPage" :class="previousPage === '' || previousPage == null ? 'text-gray-300' : 'text-gray-600'" class="flex cursor-pointer items-center justify-center px-4 h-5 ml-0 leading-tight bg-white rounded-l-md">
+                        Previous
+                    </li>
+                    <li v-for="i in totalPages" :class="currentPage == i ? 'text-violet-600' : 'text-gray-600'" class="flex items-center justify-center px-4 h-5 leading-tight bg-white">
+                        {{ i }}
+                    </li>
+
+                    <li @click="goToNextPage" :class="nextPage === '' || nextPage == null ? 'text-gray-300' : 'text-gray-600'" class="flex cursor-pointer items-center justify-center px-4 h-5 ml-0 leading-tight bg-white rounded-r-md">
+                        Next
+                    </li>
+                </ul>
+            </div>
+            <div class="hidden lg:block font-base mt-5 rounded-md overflow-x-auto">
                 <table v-if="trucks.length" class="w-full text-sm text-left text-gray-500">
                     <thead class="text-xs text-gray-950 uppercase bg-white border-b font-base">
                         <tr>
@@ -34,10 +72,10 @@
                             </th>
 
                             <th scope="col" class="px-6 py-3">
-                                year 
+                                year
                             </th>
                             <th scope="col" class="px-6 py-3">
-                                chassis 
+                                chassis
                             </th>
                             <th scope="col" class="px-6 py-3">
                                 registration
@@ -49,7 +87,7 @@
                                 engine hp
                             </th>
                             <th scope="col" class="px-6 py-3">
-                                 weight
+                                weight
                             </th>
                             <th scope="col" class="px-6 py-3">
                                 action
@@ -94,21 +132,17 @@
                     </tbody>
                 </table>
                 <ul v-if="trucks.length" class="mt-2 text-sm font-base inline-flex -space-x-px items-center divide-x">
-                    <li @click="goToLastPage"
-                    :class="previousPage === '' || previousPage == null ? 'text-gray-300' : 'text-gray-600'"
-                    class="flex cursor-pointer items-center justify-center px-4 h-10 ml-0 leading-tight bg-white rounded-l-md">
+                    <li @click="goToLastPage" :class="previousPage === '' || previousPage == null ? 'text-gray-300' : 'text-gray-600'" class="flex cursor-pointer items-center justify-center px-4 h-10 ml-0 leading-tight bg-white rounded-l-md">
                         Previous
                     </li>
                     <li v-for="i in totalPages" :class="currentPage == i ? 'text-violet-600' : 'text-gray-600'" class="flex items-center justify-center px-4 h-10 leading-tight bg-white">
                         {{ i }}
                     </li>
 
-                    <li @click="goToNextPage"
-                    :class="nextPage === '' || nextPage == null ? 'text-gray-300' : 'text-gray-600'"
-                    class="flex cursor-pointer items-center justify-center px-4 h-10 ml-0 leading-tight bg-white rounded-r-md">
+                    <li @click="goToNextPage" :class="nextPage === '' || nextPage == null ? 'text-gray-300' : 'text-gray-600'" class="flex cursor-pointer items-center justify-center px-4 h-10 ml-0 leading-tight bg-white rounded-r-md">
                         Next
                     </li>
-                        </ul>
+                </ul>
                 <div v-else>
                     <EmptyIllustration data="trucks" />
                 </div>
@@ -117,6 +151,7 @@
     </div>
 </div>
 </template>
+
 <script>
 import Aside from '@/components/Aside.vue';
 import NewTruckDrawer from '@/components/NewTruckDrawer.vue';
@@ -171,16 +206,17 @@ export default {
             DECREASE_PAGE: 'DECREASE_PAGE',
         }),
         goToNextPage() {
-           if (this.nextPage!=null){
-            this.INCREASE_PAGE()
-            this.init()
-           }
+            if (this.nextPage != null) {
+                this.INCREASE_PAGE()
+                this.init()
+            }
         },
         goToLastPage() {
             if (this.previousPage != null) {
                 this.DECREASE_PAGE()
                 this.init()
-            }},
+            }
+        },
         init() {
             this.getAllTrucks({
                 cb: (res) => {
@@ -217,17 +253,16 @@ export default {
         this.init()
         this.emitter.on("reloadTrucks", value => {
             this.init()
-            if(value === "edit"){
+            if (value === "edit") {
                 this.emitter.emit("showNotification", {
-                "action": "edit",
-                "item": this.item
-            })
-            }
-            else if(value === "add") {
+                    "action": "edit",
+                    "item": this.item
+                })
+            } else if (value === "add") {
                 this.emitter.emit("showNotification", {
-                "action": "add",
-                "item": this.item
-            })
+                    "action": "add",
+                    "item": this.item
+                })
             }
         })
         this.emitter.on("deleteTruck", id => {
@@ -240,8 +275,7 @@ export default {
     }
 }
 </script>
-    
-    
+
 <style>
 html {
     background-color: #F1F1FB;
