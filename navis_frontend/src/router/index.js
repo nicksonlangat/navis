@@ -5,47 +5,184 @@ const routes = [
   {
     path: '/',
     name: 'dashboard',
-    component: () => import( '../views/Dashboard.vue')
+    component: () => import( '../views/Dashboard.vue'),
+    async beforeEnter(to, from, next) {
+      try {
+        var hasPermission = localStorage.getItem("hasPermission");
+        if (hasPermission) {
+          next()
+        }
+        else {
+          next({
+            name: "login"
+          })
+        }
+      } catch (e) {
+        next({
+          name: "login"
+        })
+      }
+    } 
   },
   {
     path: '/shipments',
     name: 'shipments',
-    component: () => import( '../views/Shipments.vue')
+    component: () => import( '../views/Shipments.vue'),
+    async beforeEnter(to, from, next) {
+      try {
+        var hasPermission = localStorage.getItem("hasPermission");
+        if (hasPermission) {
+          next()
+        }
+        else {
+          next({
+            name: "login"
+          })
+        }
+      } catch (e) {
+        next({
+          name: "login"
+        })
+      }
+    } 
   },
   {
     path: '/shipment/:id',
     name: 'shipment',
-    component: () => import( '../views/Shipment.vue')
+    component: () => import( '../views/Shipment.vue'),
+    async beforeEnter(to, from, next) {
+      try {
+        var hasPermission = localStorage.getItem("hasPermission");
+        if (hasPermission) {
+          next()
+        }
+        else {
+          next({
+            name: "login"
+          })
+        }
+      } catch (e) {
+        next({
+          name: "login"
+        })
+      }
+    } 
   },
   {
     path: '/parcels',
     name: 'parcels',
-    component: () => import( '../views/Parcels.vue')
+    component: () => import( '../views/Parcels.vue'),
+    async beforeEnter(to, from, next) {
+      try {
+        var hasPermission = localStorage.getItem("hasPermission");
+        if (hasPermission) {
+          next()
+        }
+        else {
+          next({
+            name: "login"
+          })
+        }
+      } catch (e) {
+        next({
+          name: "login"
+        })
+      }
+    } 
   },
   {
     path: '/clients',
     name: 'clients',
-    component: () => import( '../views/Clients.vue')
+    component: () => import( '../views/Clients.vue'),
+    async beforeEnter(to, from, next) {
+      try {
+        var hasPermission = localStorage.getItem("hasPermission");
+        if (hasPermission) {
+          next()
+        }
+        else {
+          next({
+            name: "login"
+          })
+        }
+      } catch (e) {
+        next({
+          name: "login"
+        })
+      }
+    } 
   },
   {
     path: '/trucks',
     name: 'trucks',
-    component: () => import( '../views/Trucks.vue')
+    component: () => import( '../views/Trucks.vue'),
+    async beforeEnter(to, from, next) {
+      try {
+        var hasPermission = localStorage.getItem("hasPermission");
+        if (hasPermission) {
+          next()
+        }
+        else {
+          next({
+            name: "login"
+          })
+        }
+      } catch (e) {
+        next({
+          name: "login"
+        })
+      }
+    } 
   },
   {
     path: '/drivers',
     name: 'drivers',
-    component: () => import( '../views/Drivers.vue')
+    component: () => import( '../views/Drivers.vue'),
+    async beforeEnter(to, from, next) {
+      try {
+        var hasPermission = localStorage.getItem("hasPermission");
+        if (hasPermission) {
+          next()
+        }
+        else {
+          next({
+            name: "login"
+          })
+        }
+      } catch (e) {
+        next({
+          name: "login"
+        })
+      }
+    } 
   },
   {
     path: '/staff',
     name: 'staff',
-    component: () => import( '../views/Staff.vue')
+    component: () => import( '../views/Staff.vue'),
+    async beforeEnter(to, from, next) {
+      try {
+        var hasPermission = localStorage.getItem("hasPermission");
+        if (hasPermission) {
+          next()
+        }
+        else {
+          next({
+            name: "login"
+          })
+        }
+      } catch (e) {
+        next({
+          name: "login"
+        })
+      }
+    } 
   },
   {
     path: '/login',
     name: 'login',
-    component: () => import( '../views/Login.vue')
+    component: () => import( '../views/Login.vue'),
+    
   },
   {
     path: '/reset',
@@ -65,7 +202,24 @@ const routes = [
   {
     path: '/account',
     name: 'account',
-    component: () => import( '../views/Account.vue')
+    component: () => import( '../views/Account.vue'),
+    async beforeEnter(to, from, next) {
+      try {
+        var hasPermission = localStorage.getItem("hasPermission");
+        if (hasPermission) {
+          next()
+        }
+        else {
+          next({
+            name: "login"
+          })
+        }
+      } catch (e) {
+        next({
+          name: "login"
+        })
+      }
+    } 
   }
 ]
 
