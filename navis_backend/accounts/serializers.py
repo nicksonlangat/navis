@@ -33,3 +33,17 @@ class ChangePasswordSerializer(serializers.Serializer):
     model = User
     old_password = serializers.CharField(required=True)
     new_password = serializers.CharField(required=True)
+
+
+class UserPasswordResetSerializer(serializers.Serializer):
+        email = serializers.EmailField(required=True)
+        
+        class Meta:
+            fields = [ "email" ]
+
+
+class UserPasswordSerializer(serializers.Serializer):
+        password = serializers.CharField(required=True)
+        
+        class Meta:
+            fields = [ "password" ]

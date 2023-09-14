@@ -19,7 +19,7 @@ const actions = {
         return await AuthApi()
             .post('accounts/login/', payload)
             .then((response) => {
-                // commit('SAVE_TOKEN', response.data)
+                localStorage.setItem("hasPermission", true)
                 localStorage.setItem("navis", JSON.stringify(response.data))
                 if (cb) {
                     cb(response.data)
